@@ -1,7 +1,7 @@
 import * as Form from '@radix-ui/react-form'
 
 
-export default function Question({ label,  }) {
+export default function Question({}) {
   return (
     <div className='p-24 w-full bg-white rounded-md'>
       <Form.Root>
