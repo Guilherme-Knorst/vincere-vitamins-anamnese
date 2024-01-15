@@ -3,7 +3,7 @@ interface HeaderProps {}
 
 export default function Header({}: HeaderProps) {
 	return (
-		<div className='z-0 flex flex-col items-center pb-4 gap-3'>
+		<div className='z-0 flex flex-col items-center gap-5'>
 			<div className='flex flex-col items-center relative'>
 				<img className='w-[230px]' src='/anamnese/img/logo/Eleven 01.png' alt=''/>
 				<img className='w-[100px] absolute bottom-0' src='/anamnese/img/logo/bio-white.png' alt=''/>

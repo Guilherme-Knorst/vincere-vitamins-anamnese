@@ -1,7 +1,6 @@
 import { PropsWithChildren } from 'react'
 import { purista } from '../../pages/_app'
 import Head from 'next/head'
-import { QuestionsProvider } from '../../providers/QuestionProvider'
 import MatrixBackground from '../matrixBackground'
 import PageContainer from '../pageContainer'
 
@@ -18,7 +17,7 @@ const RootLayout = ({ children }: PropsWithChildren) => {
 					rel='stylesheet'
 				/>
 			</Head>
-			<MatrixBackground />
+			{/* <MatrixBackground /> */}
 			<PageContainer>{children}</PageContainer>
 		</main>
 	)
