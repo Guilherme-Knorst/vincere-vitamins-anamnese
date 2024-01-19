@@ -1,4 +1,4 @@
-import { useQuestions } from '../../providers/QuestionProvider'
+import { IQuestion, useQuestions } from '../../providers/QuestionProvider'
 import {
 	ChangeEvent,
 	ChangeEventHandler,
@@ -21,15 +21,47 @@ function Question() {
 	const router = useRouter()
 	const { number } = router.query
 	const currentQuestionId = parseInt(number as string)
-	const { questions, setQuestions } = useQuestions()
+	const { questions, updateQuestionArrayWithAnswer } = useQuestions()
 	const [fadeOut, setFadeOut] = useState(true)
 	const [debounced, setDebounced] = useState(currentQuestionId)
 	const answerRef = useRef() as MutableRefObject<string | null>
 
 	useEffect(() => {
+		if (currentQuestionId) {
+			checkForConditionalDisplay()
+		}
 		const timer = setTimeout(() => setFadeOut(false), 1500)
 		const timer2 = setTimeout(() => setDebounced(currentQuestionId), 700)
 	}, [currentQuestionId])
+
+	useEffect(() => {
+		router.beforePopState(({ as }) => {
+			const currentPath = router.asPath
+			if (as !== currentPath) {
+				// Will run when leaving the current page; on back/forward actions
+				// Add your logic here, like toggling the modal state
+				// for example
+				const segments = as.split("/")
+				const destinyId = parseInt(segments[segments.length - 1])
+				if(destinyId < currentQuestionId){
+					const destinyQuestion = questions.filter((q) => q.id === destinyId)[0]
+					if(!destinyQuestion) return true
+					if(destinyQuestion.conditionalToQuestion){
+						router.push('/question/' + destinyQuestion.conditionalToQuestion)
+						return false
+					}
+				}else{
+					return true
+				}
+			}
+
+			return true
+		})
+
+		return () => {
+			router.beforePopState(() => true)
+		}
+	}, [router]) // Add any state variables to dependencies array if needed.
 
 	const handleAnswerChange = (e: ChangeEvent<HTMLInputElement>) => {
 		answerRef.current = e.target.value
@@ -39,12 +71,6 @@ function Question() {
 		return answerRef.current ?? (e.target as HTMLElement).innerText
 	}
 
-	const updateQuestionArrayWithAnswer = (answer: string) => {
-		return questions.map((p, index) =>
-			index === currentQuestionId ? { ...p, resposta: answer } : p
-		)
-	}
-
 	const next = () => {
 		answerRef.current = null
 		router.push('/question/' + (currentQuestionId + 1))
@@ -52,10 +78,25 @@ function Question() {
 
 	const handleAnswer = (e: MouseEvent<HTMLButtonElement>) => {
 		const answer = getAnswerFromButtonTextOrFilledAnswerRef(e)
-		const questionsWithUpdatedAnswer = updateQuestionArrayWithAnswer(answer)
-		setQuestions(questionsWithUpdatedAnswer)
+		updateQuestionArrayWithAnswer(answer)
 		setFadeOut(true)
 		next()
+	}
+
+	const checkForConditionalDisplay = () => {
+		const currentChekingQuestion = questions.filter((q) => q.id === currentQuestionId)[0]
+
+		const targetQuestion = questions.filter(
+			(q) => q.id == currentChekingQuestion.conditionalToQuestion
+		)[0]
+
+		if (!targetQuestion) return true
+
+		const questionIdAllowedToDisplay = targetQuestion.conditionalAnswerToQuestionRelation?.get(
+			targetQuestion.answer as string
+		)
+
+		!(currentChekingQuestion.id === questionIdAllowedToDisplay) && next()
 	}
 
 	return (
@@ -65,6 +106,7 @@ function Question() {
 					show={debounced == q.id}
 					isOpaque={fadeOut}
 					buttonText={q.buttonText ?? 'Continuar'}
+					isSmallButton={q.isSmallButton}
 					onButtonClick={handleAnswer}
 					inputText={q.inputText}
 					options={q.options}
@@ -93,6 +135,7 @@ interface QuestionContainerProps extends PropsWithChildren {
 	isOpaque?: boolean
 	header?: ReactNode
 	buttonText: string
+	isSmallButton: boolean | undefined
 	inputText?: string
 	options?: Array<string>
 	buttonOptions?: Array<string>
@@ -106,6 +149,7 @@ Question.Container = ({
 	isOpaque,
 	header,
 	buttonText,
+	isSmallButton,
 	inputText,
 	options,
 	buttonOptions,
@@ -127,7 +171,9 @@ Question.Container = ({
 				{buttonOptions ? (
 					<div className='flex gap-10'>
 						{buttonOptions.map((o) => (
-							<Button key={o} onClick={onButtonClick}>{o}</Button>
+							<Button key={o} onClick={onButtonClick} answer={isSmallButton}>
+								{o}
+							</Button>
 						))}
 					</div>
 				) : (

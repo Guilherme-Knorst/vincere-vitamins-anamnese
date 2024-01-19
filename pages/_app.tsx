@@ -3,7 +3,7 @@ import '../styles/global.css'
 import 'tailwindcss/tailwind.css'
 import localFont from 'next/font/local'
 import RootLayout from '../components/layout'
-import { QuestionsProvider } from '../providers/QuestionProvider'
+import { QuestionProvider } from '../providers/QuestionProvider'
 
 export const purista = localFont({
 	src: [
@@ -36,9 +36,9 @@ export const digital = localFont({
 export default function MyApp({ Component, pageProps }: AppProps) {
 	return (
 		<RootLayout>
-			<QuestionsProvider>
+			<QuestionProvider>
 				<Component {...pageProps} />
-			</QuestionsProvider>
+			</QuestionProvider>
 		</RootLayout>
 	)
 }
