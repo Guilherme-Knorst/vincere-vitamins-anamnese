@@ -1,4 +1,4 @@
-import { IQuestion, useQuestions } from '../../providers/QuestionProvider'
+import { CheckBoxOption, useQuestions } from '../../providers/QuestionProvider'
 import {
 	ChangeEvent,
 	ChangeEventHandler,
@@ -30,27 +30,24 @@ function Question() {
 		if (currentQuestionId) {
 			checkForConditionalDisplay()
 		}
-		const timer = setTimeout(() => setFadeOut(false), 1500)
-		const timer2 = setTimeout(() => setDebounced(currentQuestionId), 700)
+		const timer = setTimeout(() => setFadeOut(false), 400)
+		const timer2 = setTimeout(() => setDebounced(currentQuestionId), 200)
 	}, [currentQuestionId])
 
 	useEffect(() => {
 		router.beforePopState(({ as }) => {
 			const currentPath = router.asPath
 			if (as !== currentPath) {
-				// Will run when leaving the current page; on back/forward actions
-				// Add your logic here, like toggling the modal state
-				// for example
-				const segments = as.split("/")
+				const segments = as.split('/')
 				const destinyId = parseInt(segments[segments.length - 1])
-				if(destinyId < currentQuestionId){
+				if (destinyId < currentQuestionId) {
 					const destinyQuestion = questions.filter((q) => q.id === destinyId)[0]
-					if(!destinyQuestion) return true
-					if(destinyQuestion.conditionalToQuestion){
+					if (!destinyQuestion) return true
+					if (destinyQuestion.conditionalToQuestion) {
 						router.push('/question/' + destinyQuestion.conditionalToQuestion)
 						return false
 					}
-				}else{
+				} else {
 					return true
 				}
 			}
@@ -61,9 +58,16 @@ function Question() {
 		return () => {
 			router.beforePopState(() => true)
 		}
-	}, [router]) // Add any state variables to dependencies array if needed.
+	}, [router])
 
 	const handleAnswerChange = (e: ChangeEvent<HTMLInputElement>) => {
+		if (e.target.type === 'checkbox') {
+			// if(!answerRef.current){
+			// 	answerRef.current = ''
+			// }
+			// answerRef.current += e.target.name + ','
+			// return
+		}
 		answerRef.current = e.target.value
 	}
 
@@ -105,7 +109,7 @@ function Question() {
 				<Question.Container
 					show={debounced == q.id}
 					isOpaque={fadeOut}
-					buttonText={q.buttonText ?? 'Continuar'}
+					buttonText={q.buttonText}
 					isSmallButton={q.isSmallButton}
 					onButtonClick={handleAnswer}
 					inputText={q.inputText}
@@ -134,10 +138,10 @@ interface QuestionContainerProps extends PropsWithChildren {
 	show: boolean
 	isOpaque?: boolean
 	header?: ReactNode
-	buttonText: string
-	isSmallButton: boolean | undefined
+	buttonText?: string
+	isSmallButton?: boolean | undefined
 	inputText?: string
-	options?: Array<string>
+	options?: Array<CheckBoxOption>
 	buttonOptions?: Array<string>
 	onButtonClick: MouseEventHandler<HTMLButtonElement>
 	handleInputChange?: ChangeEventHandler<HTMLInputElement>
@@ -148,7 +152,7 @@ Question.Container = ({
 	show,
 	isOpaque,
 	header,
-	buttonText,
+	buttonText = 'Continuar',
 	isSmallButton,
 	inputText,
 	options,
@@ -159,27 +163,46 @@ Question.Container = ({
 }: QuestionContainerProps) => {
 	return (
 		<div
-			className={`transition-opacity ease-linear duration-700	flex flex-col items-center gap-10 ${
+			className={`transition-opacity ease-linear duration-400	flex flex-col items-center gap-20 ${
 				show ? 'show' : 'hidden'
 			} ${isOpaque ? 'opacity-0' : 'opacity-100'}`}
 		>
 			{header}
 			<Card>{props.children}</Card>
-			{options && <MultipleSelect options={options} onChange={handleInputChange} />}
-			{inputText && <Input onChange={handleInputChange} placeholder={inputText} />}
-			<div className='pt-6'>
-				{buttonOptions ? (
-					<div className='flex gap-10'>
-						{buttonOptions.map((o) => (
-							<Button key={o} onClick={onButtonClick} answer={isSmallButton}>
-								{o}
+			{options && (
+				<div className='flex flex-col items-center gap-20'>
+					<MultipleSelect options={options} onChange={handleInputChange} />
+					{!inputText && <Button onClick={onButtonClick}>{buttonText}</Button>}
+					{inputText && (
+						<div className='flex items-center gap-10 pt-12'>
+							<Input onChange={handleInputChange} placeholder={inputText} />
+							<Button onClick={onButtonClick} isInputConfirm={true}>
+								{buttonText}
 							</Button>
-						))}
-					</div>
-				) : (
-					<Button onClick={onButtonClick}>{buttonText}</Button>
-				)}
-			</div>
+						</div>
+					)}
+				</div>
+			)}
+
+			{buttonOptions && (
+				<div className='flex gap-10'>
+					{buttonOptions.map((o) => (
+						<Button key={o} onClick={onButtonClick} small={isSmallButton}>
+							{o}
+						</Button>
+					))}
+				</div>
+			)}
+
+			{(inputText && !options) && (
+				<div className='flex items-center gap-10 pt-12'>
+					<Input onChange={handleInputChange} placeholder={inputText} />
+					<Button onClick={onButtonClick} isInputConfirm={true}>
+						{buttonText}
+					</Button>
+				</div>
+			)}
+			{(!inputText && !options && !buttonOptions) && <Button onClick={onButtonClick}>{buttonText}</Button>}
 		</div>
 	)
 }

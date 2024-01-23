@@ -7,9 +7,13 @@ import React, {
 	createContext,
 	useContext,
 	useEffect,
-	useRef,
 	useState
 } from 'react'
+
+export interface CheckBoxOption {
+	name: string
+	isChecked: boolean
+}
 
 export interface IQuestion {
 	id: number
@@ -17,7 +21,7 @@ export interface IQuestion {
 	buttonText?: string
 	hasDynamicText?: boolean
 	inputText?: string
-	options?: Array<string>
+	options?: Array<CheckBoxOption>
 	buttonOptions?: Array<string>
 	isSmallButton?: boolean
 	iconName?: string
@@ -38,16 +42,13 @@ interface Context {
 	questions: IQuestion[]
 	setQuestions: Dispatch<SetStateAction<IQuestion[]>>
 	updateQuestionArrayWithAnswer: (answer: string) => void
-	// setProfile: Dispatch<SetStateAction<Partial<UserProfile> | null>>
 }
 
-// Criação do contexto
 export const QuestionContext = createContext<Context>({
 	questions: [],
 	setQuestions: () => {},
 	updateQuestionArrayWithAnswer: () => {},
 	profile: null
-	// setProfile: () => {}
 })
 
 export const QuestionProvider = ({ children }: PropsWithChildren) => {
@@ -395,9 +396,12 @@ export const QuestionProvider = ({ children }: PropsWithChildren) => {
 		{
 			id: 42,
 			text: 'Possui alguma doença relacionada a pele?',
-			options: ['Psoríase', 'Rosácea', 'Dermatite'],
+			options: [
+				{ name: 'Psoríase', isChecked: false },
+				{ name: 'Rosácea', isChecked: false },
+				{ name: 'Dermatite', isChecked: false }
+			],
 			inputText: 'Outras, digite aqui...',
-			buttonText: 'Continuar',
 			iconName: 'pele',
 			answer: ''
 		},
@@ -413,13 +417,13 @@ export const QuestionProvider = ({ children }: PropsWithChildren) => {
 				</>
 			),
 			options: [
-				'Alimentação saudável',
-				'Prática de exercícios físicos',
-				'Compulsão por doces ou comida',
-				'Exposição frequente ao sol',
-				'Consumo de álcool',
-				'Tabagismo',
-				'Consumo de café'
+				{ name: 'Alimentação saudável', isChecked: false },
+				{ name: 'Prática de exercícios físicos', isChecked: false },
+				{ name: 'Compulsão por doces ou comida', isChecked: false },
+				{ name: 'Exposição frequente ao sol', isChecked: false },
+				{ name: 'Consumo de álcool', isChecked: false },
+				{ name: 'Tabagismo', isChecked: false },
+				{ name: 'Consumo de café', isChecked: false }
 			],
 			buttonText: 'Continuar',
 			answer: ''
@@ -451,8 +455,26 @@ export const QuestionProvider = ({ children }: PropsWithChildren) => {
 		{
 			id: 48,
 			text: 'Você possui alguma das seguintes condições?',
-			options: ['uau'],
-			inputText: 'Continuar',
+			options: [
+				{ name: 'Rinite alérgica', isChecked: false },
+				{ name: 'Enxaqueca', isChecked: false },
+				{ name: 'Colesterol e triglicérides elevados', isChecked: false },
+				{ name: 'Pressão alta', isChecked: false },
+				{ name: 'Pressão baixa', isChecked: false },
+				{ name: 'Dores articulares', isChecked: false },
+				{ name: 'Glicemia elevada', isChecked: false },
+				{ name: 'Anemia', isChecked: false },
+				{ name: 'Asma', isChecked: false },
+				{ name: 'Diabetes', isChecked: false },
+				{ name: 'Cirurgia bariátrica', isChecked: false },
+				{ name: 'Cirurgia recente (menos de 3 meses)', isChecked: false },
+				{ name: 'Distúrbios gastrointestinais', isChecked: false },
+				{ name: 'Problemas renais', isChecked: false },
+				{ name: 'Problemas na vesícula', isChecked: false },
+				{ name: 'Problemas no fígado', isChecked: false },
+				{ name: 'Problemas na tireoide', isChecked: false },
+				{ name: 'Problemas cardíacos', isChecked: false }
+			],
 			answer: ''
 		},
 		{
@@ -495,13 +517,27 @@ export const QuestionProvider = ({ children }: PropsWithChildren) => {
 			text: 'Você possui alguma outra condição crônica que necessite acompanhamento médico ou que seja importante relatar?',
 			buttonOptions: ['Não'],
 			inputText: 'Sim, especifique...',
-			iconName: 'pele',
 			answer: ''
 		},
 		{
 			id: 55,
 			text: 'Nos últimos meses utilizou medicamentos para algum desses motivos?',
-			buttonOptions: ['uau2'],
+			options: [
+				{ name: 'Anticoagulantes', isChecked: false },
+				{ name: 'Antidepressivos', isChecked: false },
+				{ name: 'Outros medicamentos psiquiátricos ou neurológicos', isChecked: false },
+				{ name: 'Anti inflamatórios', isChecked: false },
+				{ name: 'Antibióticos', isChecked: false },
+				{ name: 'Medicamentos para colesterol', isChecked: false },
+				{ name: 'Medicamentos para diabetes', isChecked: false },
+				{ name: 'Medicamentos para emagrecimento', isChecked: false },
+				{ name: 'Medicamentos para a pele', isChecked: false },
+				{ name: 'Medicamentos para pressão alta', isChecked: false },
+				{ name: 'Medicamentos para saúde cardíaca', isChecked: false },
+				{ name: 'Protetores gástricos', isChecked: false },
+				{ name: 'Medicamentos para tireoide', isChecked: false },
+				{ name: 'Hormônios e anticoncepcionais', isChecked: false }
+			],
 			answer: ''
 		},
 		{
@@ -541,14 +577,14 @@ export const QuestionProvider = ({ children }: PropsWithChildren) => {
 			id: 61,
 			text: (
 				<>
-					<p>Muito bem, f inalizamos essa primeira etapa</p>
+					<p>Muito bem, finalizamos essa primeira etapa</p>
 					<p className='pt-6'>
 						Nossa anamnese ofereceu perguntas claras e organizadas para obter
 						informações essenciais sobre sua saúde e estilo de vida atuais, garantindo
 						que todas as áreas relevantes fossem enfim abordadas
 					</p>
 					<p className='pt-6'>Seu relatório está pronto e já pode ser gerado</p>
-					<p>Preparado para vê lo?</p>
+					<p>Preparado para vê-lo?</p>
 				</>
 			),
 			buttonOptions: ['Gerar relatório...'],
@@ -645,6 +681,10 @@ export const QuestionProvider = ({ children }: PropsWithChildren) => {
 
 	const [questions, setQuestions] = useState<IQuestion[]>(qs)
 
+	console.log('resposta ', questions[QUESTION_INDEX]?.answer)
+
+	if (QUESTION_INDEX === 71) console.log('final ', questions)
+
 	useEffect(() => {
 		setQuestions(
 			questions.map((q, qIndex) => {
@@ -660,13 +700,6 @@ export const QuestionProvider = ({ children }: PropsWithChildren) => {
 		fillDynamicTextIfNeeded()
 	}, [profile])
 
-	const fillProfile = (field: string, answer: string) => {
-		setProfile((prev) => ({
-			...prev,
-			[field]: answer
-		}))
-	}
-
 	const currentQuestionHasRelation = () =>
 		ANSWER_TO_QUESTION_TEXT_RELATION_IDS.has(currentQuestionId)
 
@@ -675,28 +708,29 @@ export const QuestionProvider = ({ children }: PropsWithChildren) => {
 			setQuestions((prev) => {
 				return prev.map((q) => {
 					if (ANSWER_TO_QUESTION_TEXT_RELATION_IDS.get(currentQuestionId) === q.id) {
-						let updatedText = q.text
+						let updatedText = q.text as string
 						console.log('asasdasd ', profile)
 
 						for (const key of Object.keys(profile as UserProfile)) {
-							// console.log('asasdasd ', profile)
 							const value = profile[key] !== undefined ? profile[key] : ''
-							updatedText = updatedText.replace(
+							updatedText = updatedText?.replace(
 								new RegExp(`{${key}}`, 'g'),
 								value as string
 							)
 						}
-
-						// const updatedText = q.text?.replace(
-						// 	new RegExp(`{${'name'}}`, 'g'),
-						// 	prev.filter((q) => q.id === currentQuestionId)[0].answer as string
-						// 	)
 						return { ...q, text: updatedText }
 					}
 					return q
 				})
 			})
 		}
+	}
+
+	const fillProfile = (field: string, answer: string) => {
+		setProfile((prev) => ({
+			...prev,
+			[field]: answer
+		}))
 	}
 
 	const updateQuestionArrayWithAnswer = (answer: string) => {
@@ -706,9 +740,6 @@ export const QuestionProvider = ({ children }: PropsWithChildren) => {
 					if (q.fillsProfileField) {
 						fillProfile(q.fillsProfileField as string, answer)
 					}
-					// if(q.showConditional !== undefined){
-
-					// }
 					return { ...q, answer: answer }
 				}
 				return q
