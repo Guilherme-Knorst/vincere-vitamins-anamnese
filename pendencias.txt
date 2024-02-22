@@ -1,0 +1,5 @@
+obrigar a preencher
+nao mostrar perguntas anticoncepcional se selecionou homem no inicio
+arrumar preenchimento de respostas multiplas checkbox
+arrumar responsividades flex button options, checkbox
+arrumar responsividades MOBILE
