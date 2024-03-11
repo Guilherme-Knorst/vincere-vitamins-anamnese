@@ -616,31 +616,31 @@ export const QuestionProvider = ({ children }: PropsWithChildren) => {
 			buttonOptions: ['Gerar relatório...'],
 			answer: ''
 		},
-		// {
-		// 	id: 70,
-		// 	text: (
-		// 		<>
-		// 			<p>Aqui na Eleven, acreditamos em ser excelêntes!</p>
-		// 			<p className='pt-6'>
-		// 				É por isso que criamos f órmulas inteligentes pensando acima de tudo na sua
-		// 				saúde, já que muitas pessoas podem ser alérgicas a alguns elementos
-		// 				tradicionalmente vistos na indústria Sendo assim prepararemos sua fórmula
-		// 				personalizada em cápsulas incolores, sem adição de corantes ou adoçantes
-		// 				artificiais, sem açucares, sem caseína, glúten e até mesmo sem parabenos, já
-		// 				que visamos proporcionar uma melhor absorção e preservação dos nutrientes,
-		// 				otimizando ainda mais a qualidade final de sua fórmula para oferecer a
-		// 				máxima pureza de cada matéria prima
-		// 			</p>
-		// 			<p className='pt-6'>
-		// 				Estamos ansiosos para ajudar você nessa nova etapa de sua vida, e esperamos
-		// 				que esteja totalmente preparado para uma experiência única, como nunca antes
-		// 				ninguém ousou proporcionar nesse setor
-		// 			</p>
-		// 		</>
-		// 	),
-		// 	buttonOptions: ['Eu quero ser ELEVEN'],
-		// 	answer: ''
-		// },
+		{
+			id: 61,
+			text: (
+				<>
+					<p>Aqui na Eleven, acreditamos em ser excelêntes!</p>
+					<p className='pt-6'>
+						É por isso que criamos f órmulas inteligentes pensando acima de tudo na sua
+						saúde, já que muitas pessoas podem ser alérgicas a alguns elementos
+						tradicionalmente vistos na indústria Sendo assim prepararemos sua fórmula
+						personalizada em cápsulas incolores, sem adição de corantes ou adoçantes
+						artificiais, sem açucares, sem caseína, glúten e até mesmo sem parabenos, já
+						que visamos proporcionar uma melhor absorção e preservação dos nutrientes,
+						otimizando ainda mais a qualidade final de sua fórmula para oferecer a
+						máxima pureza de cada matéria prima
+					</p>
+					<p className='pt-6'>
+						Estamos ansiosos para ajudar você nessa nova etapa de sua vida, e esperamos
+						que esteja totalmente preparado para uma experiência única, como nunca antes
+						ninguém ousou proporcionar nesse setor
+					</p>
+				</>
+			),
+			buttonOptions: ['Eu quero ser ELEVEN'],
+			answer: ''
+		},
 		// {
 		// 	id: 71,
 		// 	text: 'Digite aqui o seu CEP para analisarmos a melhor entrega de sua fórmula',
