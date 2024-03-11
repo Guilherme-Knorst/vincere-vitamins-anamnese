@@ -13,10 +13,10 @@ export default function Button({ small, isInputConfirm, ...props }: ButtonProps)
 			${isInputConfirm && 'chanfro-btn w-[150px]'}`}
 		>
 			<button
-				className={`${
+				className={`${ 
 					small &&
 					'chanfro-btn-answer bg-black w-full p-3 text-white text-center hover:text-black hover:bg-gradient-to-r hover:from-primary hover:to-secondary'
-				}  w-full p-4`}
+				}  w-full p-4 disabled:bg-slate-500`}
 				type='button'
 				{...props}
 			>

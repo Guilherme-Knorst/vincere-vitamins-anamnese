@@ -173,7 +173,11 @@ export const QuestionProvider = ({ children }: PropsWithChildren) => {
 		{
 			id: 13,
 			text: 'Como percebe a queda da sua imunidade?',
-			buttonOptions: ['Gripes e resfriados', 'Dores de garganta', 'Herpes'],
+			options: [
+				{ name: 'Gripes e resfriados', isChecked: false },
+				{ name: 'Dores de garganta', isChecked: false },
+				{ name: 'Herpes', isChecked: false }
+			],
 			inputText: 'Outra, digite aqui...',
 			iconName: 'imunidade',
 			answer: ''
@@ -196,7 +200,13 @@ export const QuestionProvider = ({ children }: PropsWithChildren) => {
 		{
 			id: 16,
 			text: 'Como descreveria sua digestão?',
-			buttonOptions: ['Náuseas', 'Azia', 'Gases', 'Ótima'],
+			options: [
+				{ name: 'Náuseas', isChecked: false },
+				{ name: 'Azia', isChecked: false },
+				{ name: 'Gases', isChecked: false },
+				{ name: 'Ótima', isChecked: false }
+			],
+			inputText: 'Outras, digite aqui...',
 			iconName: 'intestino',
 			answer: ''
 		},
@@ -271,7 +281,12 @@ export const QuestionProvider = ({ children }: PropsWithChildren) => {
 		{
 			id: 26,
 			text: 'Possui algum desses problemas do sono?',
-			buttonOptions: ['Insônia', 'Apneia', 'Muitas interrupções', 'Nenhum'],
+			options: [
+				{ name: 'Insônia', isChecked: false },
+				{ name: 'Apneia', isChecked: false },
+				{ name: 'Muitas interrupções', isChecked: false },
+				{ name: 'Nenhum', isChecked: false }
+			],
 			inputText: 'Outro, digite aqui...',
 			iconName: 'sono',
 			answer: ''
@@ -300,11 +315,15 @@ export const QuestionProvider = ({ children }: PropsWithChildren) => {
 			iconName: 'stress',
 			answer: ''
 		},
+		//CONDICIONAL HOMEM
 		{
 			id: 30,
 			text: 'Caso seja do sexo feminino, já utilizou algum método contraceptivo?',
-			buttonOptions: ['Sou homem', 'Anticoncepcional', 'Diu Hormonal'],
-			inputText: 'Outra, digite aqui...',
+			options: [
+				{ name: 'Anticoncepcional', isChecked: false },
+				{ name: 'Diu Hormonal', isChecked: false },
+			],
+			inputText: 'Outro, digite aqui...',
 			iconName: 'libido',
 			answer: ''
 		},
@@ -318,14 +337,6 @@ export const QuestionProvider = ({ children }: PropsWithChildren) => {
 		},
 		{
 			id: 32,
-			text: 'Houve alguma mudança significativa na vida sexual?',
-			buttonOptions: ['Não'],
-			inputText: 'Sim, digite aqui...',
-			iconName: 'libido',
-			answer: ''
-		},
-		{
-			id: 33,
 			text: 'Como você classificaria seu nível atual de apetite sexual de 0 a 10',
 			buttonOptions: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
 			isSmallButton: true,
@@ -333,14 +344,14 @@ export const QuestionProvider = ({ children }: PropsWithChildren) => {
 			answer: ''
 		},
 		{
-			id: 34,
+			id: 33,
 			text: 'Você tem enfrentado problemas com queda de cabelo?',
 			buttonOptions: ['Sim', 'Não'],
 			iconName: 'cabelo-unha',
 			answer: ''
 		},
 		{
-			id: 35,
+			id: 34,
 			text: 'Como você classificaria a saúde atual do seu cabelo de 0 a 10',
 			buttonOptions: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
 			isSmallButton: true,
@@ -348,14 +359,14 @@ export const QuestionProvider = ({ children }: PropsWithChildren) => {
 			answer: ''
 		},
 		{
-			id: 36,
+			id: 35,
 			text: 'Suas unhas estão mais fracas que o normal?',
 			buttonOptions: ['Sim', 'Não'],
 			iconName: 'cabelo-unha',
 			answer: ''
 		},
 		{
-			id: 37,
+			id: 36,
 			text: 'Como você classificaria a saúde atual de suas unhas de 0 a 10',
 			buttonOptions: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
 			isSmallButton: true,
@@ -363,30 +374,36 @@ export const QuestionProvider = ({ children }: PropsWithChildren) => {
 			answer: ''
 		},
 		{
-			id: 38,
+			id: 37,
 			text: 'Tem tido problemas com caspas?',
 			buttonOptions: ['Sim', 'Não'],
 			iconName: 'pele',
 			answer: ''
 		},
 		{
-			id: 39,
+			id: 38,
 			text: 'Como descreveria seu tipo de pele?',
 			buttonOptions: ['Oleosa', 'Seca', 'Mista', 'Normal'],
 			iconName: 'pele',
 			answer: ''
 		},
 		{
-			id: 40,
+			id: 39,
 			text: 'Quais são suas principais preocupações com a pele?',
-			buttonOptions: ['Acnes', 'Manchas', 'Envelhecimento', 'Pele seca', 'Pele oleosa'],
+			options: [
+				{ name: 'Acnes', isChecked: false },
+				{ name: 'Manchas', isChecked: false },
+				{ name: 'Envelhecimento', isChecked: false },
+				{ name: 'Pele seca', isChecked: false },
+				{ name: 'Pele oleosa', isChecked: false },
+			],
 			inputText: 'Outra, digite aqui...',
 			buttonText: 'Continuar',
 			iconName: 'pele',
 			answer: ''
 		},
 		{
-			id: 41,
+			id: 40,
 			text: 'Como você classificaria a saúde atual da sua pele de 0 a 10',
 			buttonOptions: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
 			isSmallButton: true,
@@ -394,7 +411,7 @@ export const QuestionProvider = ({ children }: PropsWithChildren) => {
 			answer: ''
 		},
 		{
-			id: 42,
+			id: 41,
 			text: 'Possui alguma doença relacionada a pele?',
 			options: [
 				{ name: 'Psoríase', isChecked: false },
@@ -406,7 +423,7 @@ export const QuestionProvider = ({ children }: PropsWithChildren) => {
 			answer: ''
 		},
 		{
-			id: 43,
+			id: 42,
 			text: (
 				<>
 					<p>Ótimo, até aqui tudo está claro e anotado</p>
@@ -429,31 +446,40 @@ export const QuestionProvider = ({ children }: PropsWithChildren) => {
 			answer: ''
 		},
 		{
-			id: 44,
+			id: 43,
 			text: 'Com que frequência pratica atividades físicas na semana?',
 			buttonOptions: ['1 a 2 vezes', '3 a 4 vezes', '5 ou mais vezes', 'Nenhuma'],
 			answer: ''
 		},
 		{
-			id: 45,
+			id: 44,
 			text: 'Em qual período costuma praticá las?',
-			buttonOptions: ['Manhã', 'Tarde', 'Noite'],
+			options: [
+				{ name: 'Manhã', isChecked: false },
+				{ name: 'Tarde', isChecked: false },
+				{ name: 'Noite', isChecked: false }
+			],
 			answer: ''
 		},
 		{
-			id: 46,
+			id: 45,
 			text: 'Quais são os tipos de atividade que pratica?',
 			inputText: 'Digite aqui...',
 			answer: ''
 		},
 		{
-			id: 47,
+			id: 46,
 			text: 'Qual o principal objetivo de suas práticas?',
-			buttonOptions: ['Saúde', 'Massa magra', 'Emagrecimento', 'Performance'],
+			options: [
+				{ name: 'Saúde', isChecked: false },
+				{ name: 'Massa magra', isChecked: false },
+				{ name: 'Emagrecimento', isChecked: false },
+				{ name: 'Performance', isChecked: false }
+			],
 			answer: ''
 		},
 		{
-			id: 48,
+			id: 47,
 			text: 'Você possui alguma das seguintes condições?',
 			options: [
 				{ name: 'Rinite alérgica', isChecked: false },
@@ -478,49 +504,49 @@ export const QuestionProvider = ({ children }: PropsWithChildren) => {
 			answer: ''
 		},
 		{
-			id: 49,
+			id: 48,
 			text: 'Já fez alguma cirurgia?',
 			buttonOptions: ['Não'],
 			inputText: 'Sim, especifique...',
 			answer: ''
 		},
 		{
-			id: 50,
+			id: 49,
 			text: 'Sente dores ou possui algum tipo de lesão?',
 			buttonOptions: ['Não'],
 			inputText: 'Sim, especifique...',
 			answer: ''
 		},
 		{
-			id: 51,
+			id: 50,
 			text: 'Já teve ou tem algum tipo de distúrbio alimentar?',
 			buttonOptions: ['Não'],
 			inputText: 'Sim, especifique...',
 			answer: ''
 		},
 		{
-			id: 52,
+			id: 51,
 			text: 'Você tem alguma alergia medicamentosa?',
 			buttonOptions: ['Não'],
 			inputText: 'Sim, especifique...',
 			answer: ''
 		},
 		{
-			id: 53,
+			id: 52,
 			text: 'Toma algum medicamento regularmente? (Se sim, quais?)',
 			buttonOptions: ['Não'],
 			inputText: 'Sim, especifique...',
 			answer: ''
 		},
 		{
-			id: 54,
+			id: 53,
 			text: 'Você possui alguma outra condição crônica que necessite acompanhamento médico ou que seja importante relatar?',
 			buttonOptions: ['Não'],
 			inputText: 'Sim, especifique...',
 			answer: ''
 		},
 		{
-			id: 55,
+			id: 54,
 			text: 'Nos últimos meses utilizou medicamentos para algum desses motivos?',
 			options: [
 				{ name: 'Anticoagulantes', isChecked: false },
@@ -541,40 +567,40 @@ export const QuestionProvider = ({ children }: PropsWithChildren) => {
 			answer: ''
 		},
 		{
-			id: 56,
+			id: 55,
 			text: 'Tem alguma contra indicação para suplem entação com ferro?',
 			buttonOptions: ['Não'],
 			inputText: 'Sim, especifique...',
 			answer: ''
 		},
 		{
-			id: 57,
+			id: 56,
 			text: 'Utiliza desodorante spray tradicional (com alumínio)?',
 			buttonOptions: ['Sim', 'Não'],
 			answer: ''
 		},
 		{
-			id: 58,
+			id: 57,
 			text: 'Em sua alimentação, consome peixes com frequência? (levando em consideração a exposição ao mercúrio)',
 			buttonOptions: ['Sim', 'Não'],
 			answer: ''
 		},
 		{
-			id: 59,
+			id: 58,
 			text: 'Quando foi a última vez em que realizou um protocolo de desparasitação contra vermes?',
 			buttonOptions: ['Há mais de 1 ano', 'nunca fiz'],
 			inputText: 'Digite aqui...',
 			answer: ''
 		},
 		{
-			id: 60,
+			id: 59,
 			text: 'Há mais alguma questão de saúde que gostaria de mencionar',
 			buttonOptions: ['Não'],
 			inputText: 'Sim, especifique...',
 			answer: ''
 		},
 		{
-			id: 61,
+			id: 60,
 			text: (
 				<>
 					<p>Muito bem, finalizamos essa primeira etapa</p>
@@ -590,98 +616,47 @@ export const QuestionProvider = ({ children }: PropsWithChildren) => {
 			buttonOptions: ['Gerar relatório...'],
 			answer: ''
 		},
-		{
-			id: 62,
-			text: 'Relatório',
-			buttonOptions: ['Sim', 'Não'],
-			iconName: 'pele',
-			answer: ''
-		},
-		{
-			id: 64,
-			text: 'Tem tido problemas com caspas?',
-			buttonOptions: ['Sim', 'Não'],
-			iconName: 'pele',
-			answer: ''
-		},
-		{
-			id: 65,
-			text: 'Tem tido problemas com caspas?',
-			buttonOptions: ['Sim', 'Não'],
-			iconName: 'pele',
-			answer: ''
-		},
-		{
-			id: 66,
-			text: 'Tem tido problemas com caspas?',
-			buttonOptions: ['Sim', 'Não'],
-			iconName: 'pele',
-			answer: ''
-		},
-		{
-			id: 67,
-			text: 'Tem tido problemas com caspas?',
-			buttonOptions: ['Sim', 'Não'],
-			iconName: 'pele',
-			answer: ''
-		},
-		{
-			id: 68,
-			text: 'Tem tido problemas com caspas?',
-			buttonOptions: ['Sim', 'Não'],
-			iconName: 'pele',
-			answer: ''
-		},
-		{
-			id: 69,
-			text: 'Tem tido problemas com caspas?',
-			buttonOptions: ['Sim', 'Não'],
-			iconName: 'pele',
-			answer: ''
-		},
-		{
-			id: 70,
-			text: (
-				<>
-					<p>Aqui na Eleven, acreditamos em ser excelêntes!</p>
-					<p className='pt-6'>
-						É por isso que criamos f órmulas inteligentes pensando acima de tudo na sua
-						saúde, já que muitas pessoas podem ser alérgicas a alguns elementos
-						tradicionalmente vistos na indústria Sendo assim prepararemos sua fórmula
-						personalizada em cápsulas incolores, sem adição de corantes ou adoçantes
-						artificiais, sem açucares, sem caseína, glúten e até mesmo sem parabenos, já
-						que visamos proporcionar uma melhor absorção e preservação dos nutrientes,
-						otimizando ainda mais a qualidade final de sua fórmula para oferecer a
-						máxima pureza de cada matéria prima
-					</p>
-					<p className='pt-6'>
-						Estamos ansiosos para ajudar você nessa nova etapa de sua vida, e esperamos
-						que esteja totalmente preparado para uma experiência única, como nunca antes
-						ninguém ousou proporcionar nesse setor
-					</p>
-				</>
-			),
-			buttonOptions: ['Eu quero ser ELEVEN'],
-			answer: ''
-		},
-		{
-			id: 71,
-			text: 'Digite aqui o seu CEP para analisarmos a melhor entrega de sua fórmula',
-			inputText: 'Digite seu cep...',
-			iconName: 'pele',
-			answer: ''
-		},
-		{
-			id: 72,
-			text: 'Gostaria de fornecer seu WhatsApp para receber informações sobre a sua fórmula personalizada e ainda ter o contato do nosso time de especialistas? (Por favor, inclua o código de área)',
-			inputText: 'Digite seu número...',
-			answer: ''
-		}
+		// {
+		// 	id: 70,
+		// 	text: (
+		// 		<>
+		// 			<p>Aqui na Eleven, acreditamos em ser excelêntes!</p>
+		// 			<p className='pt-6'>
+		// 				É por isso que criamos f órmulas inteligentes pensando acima de tudo na sua
+		// 				saúde, já que muitas pessoas podem ser alérgicas a alguns elementos
+		// 				tradicionalmente vistos na indústria Sendo assim prepararemos sua fórmula
+		// 				personalizada em cápsulas incolores, sem adição de corantes ou adoçantes
+		// 				artificiais, sem açucares, sem caseína, glúten e até mesmo sem parabenos, já
+		// 				que visamos proporcionar uma melhor absorção e preservação dos nutrientes,
+		// 				otimizando ainda mais a qualidade final de sua fórmula para oferecer a
+		// 				máxima pureza de cada matéria prima
+		// 			</p>
+		// 			<p className='pt-6'>
+		// 				Estamos ansiosos para ajudar você nessa nova etapa de sua vida, e esperamos
+		// 				que esteja totalmente preparado para uma experiência única, como nunca antes
+		// 				ninguém ousou proporcionar nesse setor
+		// 			</p>
+		// 		</>
+		// 	),
+		// 	buttonOptions: ['Eu quero ser ELEVEN'],
+		// 	answer: ''
+		// },
+		// {
+		// 	id: 71,
+		// 	text: 'Digite aqui o seu CEP para analisarmos a melhor entrega de sua fórmula',
+		// 	inputText: 'Digite seu cep...',
+		// 	iconName: 'pele',
+		// 	answer: ''
+		// },
+		// {
+		// 	id: 72,
+		// 	text: 'Gostaria de fornecer seu WhatsApp para receber informações sobre a sua fórmula personalizada e ainda ter o contato do nosso time de especialistas? (Por favor, inclua o código de área)',
+		// 	inputText: 'Digite seu número...',
+		// 	answer: ''
+		// }
 	]
 
 	const [questions, setQuestions] = useState<IQuestion[]>(qs)
-
-	console.log('resposta ', questions[QUESTION_INDEX]?.answer)
 
 	if (QUESTION_INDEX === 71) console.log('final ', questions)
 
@@ -737,6 +712,14 @@ export const QuestionProvider = ({ children }: PropsWithChildren) => {
 		setQuestions(
 			questions.map((q, qIndex) => {
 				if (qIndex === QUESTION_INDEX) {
+					if (q.options) {
+						return {
+							...q,
+							options: q.options.map((o) =>
+								o.name == answer ? { ...o, isChecked: !o.isChecked } : o
+							)
+						}
+					}
 					if (q.fillsProfileField) {
 						fillProfile(q.fillsProfileField as string, answer)
 					}

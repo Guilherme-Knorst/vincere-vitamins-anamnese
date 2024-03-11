@@ -1,12 +1,11 @@
-import { CheckBoxOption, useQuestions } from '../../providers/QuestionProvider'
+import { IQuestion, useQuestions } from '../../providers/QuestionProvider'
 import {
-	ChangeEvent,
 	ChangeEventHandler,
 	MouseEvent,
-	MouseEventHandler,
 	MutableRefObject,
 	PropsWithChildren,
 	ReactNode,
+	RefObject,
 	useEffect,
 	useRef,
 	useState
@@ -21,17 +20,13 @@ function Question() {
 	const router = useRouter()
 	const { number } = router.query
 	const currentQuestionId = parseInt(number as string)
-	const { questions, updateQuestionArrayWithAnswer } = useQuestions()
-	const [fadeOut, setFadeOut] = useState(true)
-	const [debounced, setDebounced] = useState(currentQuestionId)
-	const answerRef = useRef() as MutableRefObject<string | null>
+	const { questions } = useQuestions()
+	const currentQuestion = questions[currentQuestionId - 1]
 
 	useEffect(() => {
 		if (currentQuestionId) {
 			checkForConditionalDisplay()
 		}
-		const timer = setTimeout(() => setFadeOut(false), 400)
-		const timer2 = setTimeout(() => setDebounced(currentQuestionId), 200)
 	}, [currentQuestionId])
 
 	useEffect(() => {
@@ -60,31 +55,8 @@ function Question() {
 		}
 	}, [router])
 
-	const handleAnswerChange = (e: ChangeEvent<HTMLInputElement>) => {
-		if (e.target.type === 'checkbox') {
-			// if(!answerRef.current){
-			// 	answerRef.current = ''
-			// }
-			// answerRef.current += e.target.name + ','
-			// return
-		}
-		answerRef.current = e.target.value
-	}
-
-	const getAnswerFromButtonTextOrFilledAnswerRef = (e: MouseEvent<HTMLButtonElement>) => {
-		return answerRef.current ?? (e.target as HTMLElement).innerText
-	}
-
 	const next = () => {
-		answerRef.current = null
 		router.push('/question/' + (currentQuestionId + 1))
-	}
-
-	const handleAnswer = (e: MouseEvent<HTMLButtonElement>) => {
-		const answer = getAnswerFromButtonTextOrFilledAnswerRef(e)
-		updateQuestionArrayWithAnswer(answer)
-		setFadeOut(true)
-		next()
 	}
 
 	const checkForConditionalDisplay = () => {
@@ -104,79 +76,109 @@ function Question() {
 	}
 
 	return (
-		<>
-			{questions.map((q) => (
-				<Question.Container
-					show={debounced == q.id}
-					isOpaque={fadeOut}
-					buttonText={q.buttonText}
-					isSmallButton={q.isSmallButton}
-					onButtonClick={handleAnswer}
-					inputText={q.inputText}
-					options={q.options}
-					buttonOptions={q.buttonOptions}
-					handleInputChange={handleAnswerChange}
-					key={q.id}
-					header={
-						q.iconName ? (
-							<img
-								className='w-[250px]'
-								src={`/anamnese/img/icons/${q.iconName}.png`}
-								alt=''
-							/>
-						) : null
-					}
-				>
-					{q.text}
-				</Question.Container>
-			))}
-		</>
+		<Question.Container
+			question={currentQuestion}
+			goNext={next}
+			header={
+				currentQuestion?.iconName ? (
+					<img
+						className='w-[250px]'
+						src={`/anamnese/img/icons/${currentQuestion.iconName}.png`}
+						alt=''
+					/>
+				) : null
+			}
+		>
+			{currentQuestion?.text}
+		</Question.Container>
 	)
 }
 
 interface QuestionContainerProps extends PropsWithChildren {
-	show: boolean
-	isOpaque?: boolean
 	header?: ReactNode
+	question?: IQuestion
 	buttonText?: string
-	isSmallButton?: boolean | undefined
-	inputText?: string
-	options?: Array<CheckBoxOption>
-	buttonOptions?: Array<string>
-	onButtonClick: MouseEventHandler<HTMLButtonElement>
-	handleInputChange?: ChangeEventHandler<HTMLInputElement>
+	goNext: Function
 	handleRadioChange?: ChangeEventHandler<HTMLInputElement>
 }
 
 Question.Container = ({
-	show,
-	isOpaque,
 	header,
+	question,
 	buttonText = 'Continuar',
-	isSmallButton,
-	inputText,
-	options,
-	buttonOptions,
-	onButtonClick,
-	handleInputChange,
+	goNext,
 	...props
 }: QuestionContainerProps) => {
+	const [fade, setFade] = useState(true)
+	const { updateQuestionArrayWithAnswer } = useQuestions()
+	const [answer, setAnswer] = useState<string | undefined | number>()
+
+	useEffect(() => {
+		setFade(false)
+	}, [])
+
+	useEffect(() => {
+		setAnswer(question?.answer)
+		setTimeout(() => {
+			setFade(false)
+		}, 400)
+	}, [question])
+
+	const handleChangeOption = (optionName: string) => {
+		updateQuestionArrayWithAnswer(optionName)
+	}
+
+	const getAnswerFromButtonTextOrFilledAnswerRef = (e: MouseEvent<HTMLButtonElement>) => {
+		return answer ?? (e.target as HTMLElement).innerText
+	}
+
+	const handleAnswer = (e: MouseEvent<HTMLButtonElement>) => {
+		const answer = getAnswerFromButtonTextOrFilledAnswerRef(e)
+		updateQuestionArrayWithAnswer(answer as string)
+		setFade(true)
+		setTimeout(() => {
+			setAnswer('')
+			goNext()
+		}, 400)
+	}
+
 	return (
 		<div
 			className={`transition-opacity ease-linear duration-400	flex flex-col items-center gap-20 ${
-				show ? 'show' : 'hidden'
-			} ${isOpaque ? 'opacity-0' : 'opacity-100'}`}
+				fade ? 'opacity-0' : 'opacity-100'
+			}`}
 		>
-			{header}
+			{header ? (
+				header
+			) : question?.iconName ? (
+				<img
+					className='w-[250px]'
+					src={`/anamnese/img/icons/${question.iconName}.png`}
+					alt=''
+				/>
+			) : null}
+
 			<Card>{props.children}</Card>
-			{options && (
+
+			{question?.options && (
 				<div className='flex flex-col items-center gap-20'>
-					<MultipleSelect options={options} onChange={handleInputChange} />
-					{!inputText && <Button onClick={onButtonClick}>{buttonText}</Button>}
-					{inputText && (
+					<MultipleSelect
+						onChangeOption={handleChangeOption}
+						options={question.options}
+					/>
+					{!question.inputText && <Button onClick={handleAnswer}>{buttonText}</Button>}
+					{question.inputText && (
 						<div className='flex items-center gap-10 pt-12'>
-							<Input onChange={handleInputChange} placeholder={inputText} />
-							<Button onClick={onButtonClick} isInputConfirm={true}>
+							<Input
+								value={answer}
+								onChange={(e) => setAnswer(e.target.value)}
+								placeholder={question.inputText}
+							/>
+							<Button
+								onClick={handleAnswer}
+								isInputConfirm={true}
+								disabled={answer == ''}
+							>
 								{buttonText}
 							</Button>
 						</div>
@@ -184,25 +186,34 @@ Question.Container = ({
 				</div>
 			)}
 
-			{buttonOptions && (
+			{question?.buttonOptions && (
 				<div className='flex gap-10'>
-					{buttonOptions.map((o) => (
-						<Button key={o} onClick={onButtonClick} small={isSmallButton}>
+					{question.buttonOptions.map((o) => (
+						<Button key={o} onClick={handleAnswer} small={question.isSmallButton}>
 							{o}
 						</Button>
 					))}
 				</div>
 			)}
 
-			{(inputText && !options) && (
-				<div className='flex items-center gap-10 pt-12'>
-					<Input onChange={handleInputChange} placeholder={inputText} />
-					<Button onClick={onButtonClick} isInputConfirm={true}>
+			{question?.inputText && !question.options && (
+				<div className='flex flex-col items-center gap-10 pt-12'>
+					<Input
+						value={answer}
+						onChange={(e) => setAnswer(e.target.value)}
+						placeholder={question.inputText}
+					/>
+					<Button onClick={handleAnswer} isInputConfirm={true} disabled={answer == ''}>
 						{buttonText}
 					</Button>
 				</div>
 			)}
-			{(!inputText && !options && !buttonOptions) && <Button onClick={onButtonClick}>{buttonText}</Button>}
+
+			{!question?.inputText && !question?.options && !question?.buttonOptions && (
+				<Button onClick={handleAnswer} disabled={answer == ''}>
+					{buttonText}
+				</Button>
+			)}
 		</div>
 	)
 }

@@ -1,30 +1,17 @@
 import { useRouter } from 'next/router'
-import { useState } from 'react'
 import Header from '../components/header'
 import Question from './question/[number]'
 
 export default function Anamnese() {
 	const router = useRouter()
-	const [fadeOut, setFadeOut] = useState(false)
-
-	const startAnamnese = () => {
-		setFadeOut(true)
-		const timer = setTimeout(() => {
-			router.push('/question/1')
-			clearTimeout(timer)
-		}, 700)
-	}
 
 	return (
 		<Question.Container
-			show={true}
-			isOpaque={fadeOut}
 			header={<Header />}
 			buttonText='ESTOU PRONTO!!!'
-			onButtonClick={startAnamnese}
-			
+			goNext={() => router.push('/question/1')}
 		>
-			<div>
+			<>
 				<p>Olá, seja bem-vindo à Eleven!</p>
 				<p className='pt-7'>
 					Estamos empolgados por tê-lo aqui conosco e queremos parabenizá-lo desde já por
@@ -40,7 +27,7 @@ export default function Anamnese() {
 					pessoais.
 				</p>
 				<h1 className='pt-10'>Pronto para começar?</h1>
-			</div>
+			</>
 		</Question.Container>
 	)
 }

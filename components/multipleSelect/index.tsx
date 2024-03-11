@@ -1,12 +1,12 @@
-import { ChangeEvent, ComponentProps } from 'react'
+import { ComponentProps } from 'react'
 import { CheckBoxOption } from '../../providers/QuestionProvider'
 
 interface MultipleSelectProps extends ComponentProps<'input'> {
 	options: Array<CheckBoxOption>
+	onChangeOption: (optionName: string) => void
 }
 
-export default function MultipleSelect({ options, ...props }: MultipleSelectProps) {
-
+export default function MultipleSelect({ options, onChangeOption, ...props }: MultipleSelectProps) {
 	return (
 		<div className='flex flex-col gap-2'>
 			{options.map((o) => (
@@ -17,6 +17,7 @@ export default function MultipleSelect({ options, ...props }: MultipleSelectProp
 							checked={o.isChecked}
 							className='hidden peer'
 							name={o.name}
+							onChange={() => onChangeOption(o.name)}
 							{...props}
 						/>
 						<div className='w-5 h-5 bg-primary rounded-sm hidden peer-checked:block'></div>
