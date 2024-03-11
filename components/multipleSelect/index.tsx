@@ -14,7 +14,7 @@ export default function MultipleSelect({ options, onChangeOption, ...props }: Mu
 					<label className='w-7 h-7 border border-white rounded-sm flex items-center justify-center mr-2 cursor-pointer mt-1'>
 						<input
 							type='checkbox'
-							checked={o.isChecked}
+							// checked={o.isChecked}
 							className='hidden peer'
 							name={o.name}
 							onChange={() => onChangeOption(o.name)}

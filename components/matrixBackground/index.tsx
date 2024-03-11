@@ -62,11 +62,11 @@ const MatrixBackground: React.FC = () => {
 			const handleResize = () => {
 				const newDimensions = { width: window.innerWidth, height: window.innerHeight }
 				setDimensions(newDimensions)
-				setLines(generateLines(30, newDimensions.width, newDimensions.height))
+				setLines(generateLines(11, newDimensions.width, newDimensions.height))
 			}
 
 			// window.addEventListener('resize', handleResize)
-			setLines(generateLines(30, dimensions.width, dimensions.height))
+			setLines(generateLines(11, dimensions.width, dimensions.height))
 
 			return () => window.removeEventListener('resize', handleResize)
 		}

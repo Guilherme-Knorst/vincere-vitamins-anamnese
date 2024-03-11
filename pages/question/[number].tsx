@@ -2,12 +2,9 @@ import { IQuestion, useQuestions } from '../../providers/QuestionProvider'
 import {
 	ChangeEventHandler,
 	MouseEvent,
-	MutableRefObject,
 	PropsWithChildren,
 	ReactNode,
-	RefObject,
 	useEffect,
-	useRef,
 	useState
 } from 'react'
 import { useRouter } from 'next/router'

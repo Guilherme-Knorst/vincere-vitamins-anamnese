@@ -77,7 +77,7 @@ export const QuestionProvider = ({ children }: PropsWithChildren) => {
 			id: 3,
 			text: `Ok {name}, qual sua data de nascimento?`,
 			hasDynamicText: true,
-			inputText: 'Digite sua data de nascimento...',
+			inputText: '00/00/0000',
 			answer: ''
 		},
 		{
@@ -526,7 +526,7 @@ export const QuestionProvider = ({ children }: PropsWithChildren) => {
 		},
 		{
 			id: 51,
-			text: 'Você tem alguma alergia medicamentosa?',
+			text: 'Você tem alguma alergia com alimentos ou medicamentos?',
 			buttonOptions: ['Não'],
 			inputText: 'Sim, especifique...',
 			answer: ''
@@ -568,7 +568,7 @@ export const QuestionProvider = ({ children }: PropsWithChildren) => {
 		},
 		{
 			id: 55,
-			text: 'Tem alguma contra indicação para suplem entação com ferro?',
+			text: 'Tem alguma contra indicação para suplementação com ferro?',
 			buttonOptions: ['Não'],
 			inputText: 'Sim, especifique...',
 			answer: ''
