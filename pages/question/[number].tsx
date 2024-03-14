@@ -5,6 +5,7 @@ import {
 	PropsWithChildren,
 	ReactNode,
 	useEffect,
+	useMemo,
 	useState
 } from 'react'
 import { useRouter } from 'next/router'
@@ -13,15 +14,17 @@ import { Card } from '../../components/card'
 import Input from '../../components/input'
 import MultipleSelect from '../../components/multipleSelect'
 
+const noAnswerQuestionIds = [1, 10, 11, 60]
+
 function Question() {
 	const router = useRouter()
 	const { number } = router.query
 	const currentQuestionId = parseInt(number as string)
-	const { questions } = useQuestions()
+	const { questions, updateQuestionArrayWithAnswer } = useQuestions()
 	const currentQuestion = questions[currentQuestionId - 1]
 
 	useEffect(() => {
-		if (currentQuestionId) {
+		if (currentQuestion) {
 			checkForConditionalDisplay()
 		}
 	}, [currentQuestionId])
@@ -35,8 +38,8 @@ function Question() {
 				if (destinyId < currentQuestionId) {
 					const destinyQuestion = questions.filter((q) => q.id === destinyId)[0]
 					if (!destinyQuestion) return true
-					if (destinyQuestion.conditionalToQuestion) {
-						router.push('/question/' + destinyQuestion.conditionalToQuestion)
+					if (destinyQuestion.conditionalToQuestion?.[0]) {
+						router.push('/question/' + destinyQuestion.conditionalToQuestion[0])
 						return false
 					}
 				} else {
@@ -57,29 +60,33 @@ function Question() {
 	}
 
 	const checkForConditionalDisplay = () => {
-		const currentChekingQuestion = questions.filter((q) => q.id === currentQuestionId)[0]
+		if (!currentQuestion.conditionalToQuestion) return
 
-		const targetQuestion = questions.filter(
-			(q) => q.id == currentChekingQuestion.conditionalToQuestion
-		)[0]
+		const targetQuestion = questions[(currentQuestion.conditionalToQuestion[0] as number) - 1]
 
-		if (!targetQuestion) return true
+		if (!targetQuestion) return
 
-		const questionIdAllowedToDisplay = targetQuestion.conditionalAnswerToQuestionRelation?.get(
-			targetQuestion.answer as string
-		)
+		const isCurrentQuestionAllowedToDisplay =
+			targetQuestion.answer === currentQuestion.conditionalToQuestion[1]
 
-		!(currentChekingQuestion.id === questionIdAllowedToDisplay) && next()
+		if (!isCurrentQuestionAllowedToDisplay) {
+			if (currentQuestionId === 6) {
+				console.log('hmmmmmmmmmmmmmmmm')
+				updateQuestionArrayWithAnswer(targetQuestion.answer)
+			}
+			next()
+		}
 	}
 
 	return (
 		<Question.Container
 			question={currentQuestion}
+			noAnswer={noAnswerQuestionIds.includes(currentQuestionId)}
 			goNext={next}
 			header={
 				currentQuestion?.iconName ? (
 					<img
-						className='w-[250px]'
+						className='w-[150px] min-[835px]:w-[250px]'
 						src={`/anamnese/img/icons/${currentQuestion.iconName}.png`}
 						alt=''
 					/>
@@ -92,6 +99,7 @@ function Question() {
 }
 
 interface QuestionContainerProps extends PropsWithChildren {
+	noAnswer?: boolean
 	header?: ReactNode
 	question?: IQuestion
 	buttonText?: string
@@ -100,6 +108,7 @@ interface QuestionContainerProps extends PropsWithChildren {
 }
 
 Question.Container = ({
+	noAnswer,
 	header,
 	question,
 	buttonText = 'Continuar',
@@ -108,74 +117,82 @@ Question.Container = ({
 }: QuestionContainerProps) => {
 	const [fade, setFade] = useState(true)
 	const { updateQuestionArrayWithAnswer } = useQuestions()
-	const [answer, setAnswer] = useState<string | undefined | number>()
+	const [answer, setAnswer] = useState<string | undefined>(question?.answer)
+	const router = useRouter()
 
 	useEffect(() => {
 		setFade(false)
 	}, [])
 
 	useEffect(() => {
-		setAnswer(question?.answer)
+		if (!question?.options) {
+			setAnswer(question?.answer)
+		}
 		setTimeout(() => {
 			setFade(false)
 		}, 400)
 	}, [question])
 
 	const handleChangeOption = (optionName: string) => {
-		updateQuestionArrayWithAnswer(optionName)
-	}
-
-	const getAnswerFromButtonTextOrFilledAnswerRef = (e: MouseEvent<HTMLButtonElement>) => {
-		return answer ?? (e.target as HTMLElement).innerText
+		updateQuestionArrayWithAnswer(answer, optionName)
 	}
 
 	const handleAnswer = (e: MouseEvent<HTMLButtonElement>) => {
-		const answer = getAnswerFromButtonTextOrFilledAnswerRef(e)
-		updateQuestionArrayWithAnswer(answer as string)
 		setFade(true)
+
+		if (question?.id == 60) {
+			setTimeout(() => {
+				router.push('/level')
+			}, 400)
+			return
+		}
+
 		setTimeout(() => {
 			setAnswer('')
 			goNext()
 		}, 400)
+
+		if (answer === '') {
+			const btnAnswer = (e.target as HTMLElement).innerText
+			updateQuestionArrayWithAnswer(btnAnswer)
+		} else {
+			updateQuestionArrayWithAnswer(answer)
+		}
 	}
+
+	const isChecked = useMemo(() => question?.options?.some((o) => o.isChecked), [question])
+
+	const canGoNext = () => answer != '' || noAnswer || isChecked
 
 	return (
 		<div
-			className={`transition-opacity ease-linear duration-400	flex flex-col items-center gap-20 ${
+			className={`transition-opacity ease-linear duration-400	flex flex-col items-center gap-10 min-[835px]:justify-center min-h-screen ${
 				fade ? 'opacity-0' : 'opacity-100'
 			}`}
 		>
-			{header ? (
-				header
-			) : question?.iconName ? (
-				<img
-					className='w-[250px]'
-					src={`/anamnese/img/icons/${question.iconName}.png`}
-					alt=''
-				/>
-			) : null}
+			{header ? header : null}
 
 			<Card>{props.children}</Card>
 
 			{question?.options && (
-				<div className='flex flex-col items-center gap-20'>
+				<div className='flex flex-col items-center gap-10'>
 					<MultipleSelect
 						onChangeOption={handleChangeOption}
 						options={question.options}
 					/>
-					{!question.inputText && <Button onClick={handleAnswer}>{buttonText}</Button>}
+					{!question.inputText && (
+						<Button onClick={handleAnswer} disabled={!canGoNext()}>
+							{buttonText}
+						</Button>
+					)}
 					{question.inputText && (
-						<div className='flex items-center gap-10 pt-12'>
+						<div className='flex flex-col gap-10'>
 							<Input
 								value={answer}
 								onChange={(e) => setAnswer(e.target.value)}
 								placeholder={question.inputText}
 							/>
-							<Button
-								onClick={handleAnswer}
-								isInputConfirm={true}
-								disabled={answer == ''}
-							>
+							<Button onClick={handleAnswer} disabled={!canGoNext()}>
 								{buttonText}
 							</Button>
 						</div>
@@ -184,7 +201,7 @@ Question.Container = ({
 			)}
 
 			{question?.buttonOptions && (
-				<div className='flex gap-10'>
+				<div className='flex max-[1600px]:flex-wrap justify-center gap-10 pt-5'>
 					{question.buttonOptions.map((o) => (
 						<Button key={o} onClick={handleAnswer} small={question.isSmallButton}>
 							{o}
@@ -200,14 +217,14 @@ Question.Container = ({
 						onChange={(e) => setAnswer(e.target.value)}
 						placeholder={question.inputText}
 					/>
-					<Button onClick={handleAnswer} isInputConfirm={true} disabled={answer == ''}>
+					<Button onClick={handleAnswer} disabled={!canGoNext()}>
 						{buttonText}
 					</Button>
 				</div>
 			)}
 
 			{!question?.inputText && !question?.options && !question?.buttonOptions && (
-				<Button onClick={handleAnswer} disabled={answer == ''}>
+				<Button onClick={handleAnswer} disabled={!canGoNext()}>
 					{buttonText}
 				</Button>
 			)}

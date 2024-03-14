@@ -25,9 +25,9 @@ export interface IQuestion {
 	buttonOptions?: Array<string>
 	isSmallButton?: boolean
 	iconName?: string
-	answer: string | number
-	conditionalAnswerToQuestionRelation?: Map<string, number>
-	conditionalToQuestion?: number
+	answer: string | undefined
+	noAnswer?: boolean
+	conditionalToQuestion?: Array<number | string>
 	fillsProfileField?: keyof UserProfile
 }
 
@@ -41,7 +41,7 @@ interface Context {
 	profile: Partial<UserProfile> | null
 	questions: IQuestion[]
 	setQuestions: Dispatch<SetStateAction<IQuestion[]>>
-	updateQuestionArrayWithAnswer: (answer: string) => void
+	updateQuestionArrayWithAnswer: (answer: string | undefined, optionName?: string) => void
 }
 
 export const QuestionContext = createContext<Context>({
@@ -62,9 +62,16 @@ export const QuestionProvider = ({ children }: PropsWithChildren) => {
 	const qs: IQuestion[] = [
 		{
 			id: 1,
-			text: 'Para seguirmos com o seu atendimento, precisamos da sua aprovação quanto aos Termos de Uso e à Política de Privacidade.(Fique tranquilo, todos os seus dados são confidenciais)',
+			text: (
+				<p>
+					Para seguirmos com o seu atendimento, precisamos da sua aprovação quanto aos
+					Termos de Uso e à Política de Privacidade.
+					<p className='pt-6'>(Fique tranquilo, todos os seus dados são confidenciais)</p>
+				</p>
+			),
 			buttonText: 'Aceito',
-			answer: ''
+			answer: '',
+			noAnswer: true
 		},
 		{
 			id: 2,
@@ -90,14 +97,13 @@ export const QuestionProvider = ({ children }: PropsWithChildren) => {
 			id: 5,
 			text: 'Como você se identifica?',
 			buttonOptions: ['Homem', 'Mulher', 'Outro'],
-			conditionalAnswerToQuestionRelation: new Map([['Outro', 6]]),
 			answer: ''
 		},
 		{
 			id: 6,
 			text: 'Qual seu sexo biológico?',
 			buttonOptions: ['Homem', 'Mulher'],
-			conditionalToQuestion: 5,
+			conditionalToQuestion: [5, 'Outro'],
 			answer: ''
 		},
 		{
@@ -142,7 +148,8 @@ export const QuestionProvider = ({ children }: PropsWithChildren) => {
 				</>
 			),
 			buttonText: 'Continuar',
-			answer: ''
+			answer: '',
+			noAnswer: true
 		},
 		{
 			id: 11,
@@ -161,7 +168,8 @@ export const QuestionProvider = ({ children }: PropsWithChildren) => {
 				</>
 			),
 			buttonText: 'Estou Pronto!',
-			answer: ''
+			answer: '',
+			noAnswer: true
 		},
 		{
 			id: 12,
@@ -315,24 +323,24 @@ export const QuestionProvider = ({ children }: PropsWithChildren) => {
 			iconName: 'stress',
 			answer: ''
 		},
-		//CONDICIONAL HOMEM
 		{
 			id: 30,
 			text: 'Caso seja do sexo feminino, já utilizou algum método contraceptivo?',
 			options: [
 				{ name: 'Anticoncepcional', isChecked: false },
-				{ name: 'Diu Hormonal', isChecked: false },
+				{ name: 'Diu Hormonal', isChecked: false }
 			],
 			inputText: 'Outro, digite aqui...',
 			iconName: 'libido',
+			conditionalToQuestion: [6, 'Mulher'],
 			answer: ''
 		},
 		{
 			id: 31,
 			text: 'Atualmente ainda utiliza algum método contraceptivo?',
-			buttonOptions: ['Sou homem'],
 			inputText: 'Sim, digite aqui...',
 			iconName: 'libido',
+			conditionalToQuestion: [6, 'Mulher'],
 			answer: ''
 		},
 		{
@@ -395,7 +403,7 @@ export const QuestionProvider = ({ children }: PropsWithChildren) => {
 				{ name: 'Manchas', isChecked: false },
 				{ name: 'Envelhecimento', isChecked: false },
 				{ name: 'Pele seca', isChecked: false },
-				{ name: 'Pele oleosa', isChecked: false },
+				{ name: 'Pele oleosa', isChecked: false }
 			],
 			inputText: 'Outra, digite aqui...',
 			buttonText: 'Continuar',
@@ -614,62 +622,50 @@ export const QuestionProvider = ({ children }: PropsWithChildren) => {
 				</>
 			),
 			buttonOptions: ['Gerar relatório...'],
-			answer: ''
-		},
-		{
-			id: 61,
-			text: (
-				<>
-					<p>Aqui na Eleven, acreditamos em ser excelêntes!</p>
-					<p className='pt-6'>
-						É por isso que criamos f órmulas inteligentes pensando acima de tudo na sua
-						saúde, já que muitas pessoas podem ser alérgicas a alguns elementos
-						tradicionalmente vistos na indústria Sendo assim prepararemos sua fórmula
-						personalizada em cápsulas incolores, sem adição de corantes ou adoçantes
-						artificiais, sem açucares, sem caseína, glúten e até mesmo sem parabenos, já
-						que visamos proporcionar uma melhor absorção e preservação dos nutrientes,
-						otimizando ainda mais a qualidade final de sua fórmula para oferecer a
-						máxima pureza de cada matéria prima
-					</p>
-					<p className='pt-6'>
-						Estamos ansiosos para ajudar você nessa nova etapa de sua vida, e esperamos
-						que esteja totalmente preparado para uma experiência única, como nunca antes
-						ninguém ousou proporcionar nesse setor
-					</p>
-				</>
-			),
-			buttonOptions: ['Eu quero ser ELEVEN'],
-			answer: ''
-		},
+			answer: '',
+			noAnswer: true
+		}
 		// {
-		// 	id: 71,
-		// 	text: 'Digite aqui o seu CEP para analisarmos a melhor entrega de sua fórmula',
-		// 	inputText: 'Digite seu cep...',
-		// 	iconName: 'pele',
-		// 	answer: ''
-		// },
-		// {
-		// 	id: 72,
-		// 	text: 'Gostaria de fornecer seu WhatsApp para receber informações sobre a sua fórmula personalizada e ainda ter o contato do nosso time de especialistas? (Por favor, inclua o código de área)',
-		// 	inputText: 'Digite seu número...',
+		// 	id: 61,
+		// 	text: (
+		// 		<>
+		// 			<p>Aqui na Eleven, acreditamos em ser excelêntes!</p>
+		// 			<p className='pt-6'>
+		// 				É por isso que criamos f órmulas inteligentes pensando acima de tudo na sua
+		// 				saúde, já que muitas pessoas podem ser alérgicas a alguns elementos
+		// 				tradicionalmente vistos na indústria Sendo assim prepararemos sua fórmula
+		// 				personalizada em cápsulas incolores, sem adição de corantes ou adoçantes
+		// 				artificiais, sem açucares, sem caseína, glúten e até mesmo sem parabenos, já
+		// 				que visamos proporcionar uma melhor absorção e preservação dos nutrientes,
+		// 				otimizando ainda mais a qualidade final de sua fórmula para oferecer a
+		// 				máxima pureza de cada matéria prima
+		// 			</p>
+		// 			<p className='pt-6'>
+		// 				Estamos ansiosos para ajudar você nessa nova etapa de sua vida, e esperamos
+		// 				que esteja totalmente preparado para uma experiência única, como nunca antes
+		// 				ninguém ousou proporcionar nesse setor
+		// 			</p>
+		// 		</>
+		// 	),
+		// 	buttonOptions: ['Eu quero ser ELEVEN'],
 		// 	answer: ''
 		// }
 	]
 
 	const [questions, setQuestions] = useState<IQuestion[]>(qs)
 
-	if (QUESTION_INDEX === 71) console.log('final ', questions)
+	console.log(questions)
 
-	useEffect(() => {
-		setQuestions(
-			questions.map((q, qIndex) => {
-				if (q.hasDynamicText && currentQuestionId < q.id) {
-					return { ...q, text: qs[qIndex].text }
-				}
-				return q
-			})
-		)
-	}, [currentQuestionId])
+	// useEffect(() => {
+	// 	setQuestions(
+	// 		questions.map((q, qIndex) => {
+	// 			if (q.hasDynamicText && currentQuestionId < q.id) {
+	// 				return { ...q, text: qs[qIndex].text }
+	// 			}
+	// 			return q
+	// 		})
+	// 	)
+	// }, [currentQuestionId])
 
 	useEffect(() => {
 		fillDynamicTextIfNeeded()
@@ -684,7 +680,7 @@ export const QuestionProvider = ({ children }: PropsWithChildren) => {
 				return prev.map((q) => {
 					if (ANSWER_TO_QUESTION_TEXT_RELATION_IDS.get(currentQuestionId) === q.id) {
 						let updatedText = q.text as string
-						console.log('asasdasd ', profile)
+						console.log('preecnhendo ', profile)
 
 						for (const key of Object.keys(profile as UserProfile)) {
 							const value = profile[key] !== undefined ? profile[key] : ''
@@ -708,20 +704,21 @@ export const QuestionProvider = ({ children }: PropsWithChildren) => {
 		}))
 	}
 
-	const updateQuestionArrayWithAnswer = (answer: string) => {
-		setQuestions(
-			questions.map((q, qIndex) => {
+	const updateQuestionArrayWithAnswer = (answer: string | undefined, optionName?: string) => {
+		setQuestions((prev) =>
+			prev.map((q, qIndex) => {
 				if (qIndex === QUESTION_INDEX) {
-					if (q.options) {
+					if (optionName) {
 						return {
 							...q,
-							options: q.options.map((o) =>
-								o.name == answer ? { ...o, isChecked: !o.isChecked } : o
+							answer: answer,
+							options: q.options?.map((o) =>
+								o.name == optionName ? { ...o, isChecked: !o.isChecked } : o
 							)
 						}
 					}
-					if (q.fillsProfileField) {
-						fillProfile(q.fillsProfileField as string, answer)
+					if (q.fillsProfileField && answer) {
+						fillProfile(q.fillsProfileField as string, answer as string)
 					}
 					return { ...q, answer: answer }
 				}

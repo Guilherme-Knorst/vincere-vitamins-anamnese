@@ -8,8 +8,9 @@ export default function Anamnese() {
 	return (
 		<Question.Container
 			header={<Header />}
-			buttonText='ESTOU PRONTO!!!'
+			buttonText='ESTOU PRONTO!'
 			goNext={() => router.push('/question/1')}
+			noAnswer
 		>
 			<>
 				<p>Olá, seja bem-vindo à Eleven!</p>
