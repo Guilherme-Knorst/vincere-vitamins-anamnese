@@ -192,7 +192,7 @@ export default function Report() {
 								cy={center}
 							/>
 							<circle
-								stroke='#05f28c'
+								stroke='#12ECB3'
 								fill='transparent'
 								strokeWidth={strokeWidth}
 								strokeDasharray={circumference + ' ' + circumference}
