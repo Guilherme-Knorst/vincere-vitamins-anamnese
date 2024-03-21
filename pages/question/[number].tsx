@@ -4,8 +4,10 @@ import {
 	MouseEvent,
 	PropsWithChildren,
 	ReactNode,
+	RefObject,
 	useEffect,
 	useMemo,
+	useRef,
 	useState
 } from 'react'
 import { useRouter } from 'next/router'
@@ -71,7 +73,6 @@ function Question() {
 
 		if (!isCurrentQuestionAllowedToDisplay) {
 			if (currentQuestionId === 6) {
-				console.log('hmmmmmmmmmmmmmmmm')
 				updateQuestionArrayWithAnswer(targetQuestion.answer)
 			}
 			next()
@@ -86,7 +87,7 @@ function Question() {
 			header={
 				currentQuestion?.iconName ? (
 					<img
-						className='w-[150px] min-[835px]:w-[250px]'
+						className='w-[150px] sm:w-[250px]'
 						src={`/anamnese/img/icons/${currentQuestion.iconName}.png`}
 						alt=''
 					/>
@@ -118,11 +119,20 @@ Question.Container = ({
 	const [fade, setFade] = useState(true)
 	const { updateQuestionArrayWithAnswer } = useQuestions()
 	const [answer, setAnswer] = useState<string | undefined>(question?.answer)
+	const inputRef = useRef() as RefObject<HTMLInputElement>
 	const router = useRouter()
 
 	useEffect(() => {
 		setFade(false)
 	}, [])
+
+	useEffect(() => {
+		if (inputRef.current) {
+			console.log('ref podre ', inputRef.current)
+
+			inputRef.current.focus()
+		}
+	}, [question?.id])
 
 	useEffect(() => {
 		if (!question?.options) {
@@ -162,11 +172,13 @@ Question.Container = ({
 
 	const isChecked = useMemo(() => question?.options?.some((o) => o.isChecked), [question])
 
-	const canGoNext = () => answer != '' || noAnswer || isChecked
+	const canGoNext = () => (answer && answer != '') || noAnswer || isChecked
+
+	console.log(answer)
 
 	return (
 		<div
-			className={`transition-opacity ease-linear duration-400	flex flex-col items-center gap-10 min-[835px]:justify-center min-h-screen ${
+			className={`transition-opacity ease-linear duration-400	flex flex-col items-center justify-center gap-5 min-h-screen ${
 				fade ? 'opacity-0' : 'opacity-100'
 			}`}
 		>
@@ -191,6 +203,8 @@ Question.Container = ({
 								value={answer}
 								onChange={(e) => setAnswer(e.target.value)}
 								placeholder={question.inputText}
+								autoFocus
+								ref={inputRef}
 							/>
 							<Button onClick={handleAnswer} disabled={!canGoNext()}>
 								{buttonText}
@@ -201,7 +215,7 @@ Question.Container = ({
 			)}
 
 			{question?.buttonOptions && (
-				<div className='flex max-[1600px]:flex-wrap justify-center gap-10 pt-5'>
+				<div className='flex flex-wrap justify-center gap-6 pt-5'>
 					{question.buttonOptions.map((o) => (
 						<Button key={o} onClick={handleAnswer} small={question.isSmallButton}>
 							{o}
@@ -216,6 +230,7 @@ Question.Container = ({
 						value={answer}
 						onChange={(e) => setAnswer(e.target.value)}
 						placeholder={question.inputText}
+						ref={inputRef}
 					/>
 					<Button onClick={handleAnswer} disabled={!canGoNext()}>
 						{buttonText}

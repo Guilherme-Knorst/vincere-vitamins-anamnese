@@ -1,4 +1,10 @@
-n perguntar idade calcular
+validar tipos dos campos
+
+ajustar tamanhos fontes mobile
+
+ajustar graficos responsividade mobile
+
+ajustar graficos fazer tudo funcionar
 
 This was super helpful thank you so much these are the problems that I had that you guys can avoid
 1.the less secure app is no longer available in Google account you should generate a password in google from the verification section in google account

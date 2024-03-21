@@ -63,11 +63,13 @@ export const QuestionProvider = ({ children }: PropsWithChildren) => {
 		{
 			id: 1,
 			text: (
-				<p>
-					Para seguirmos com o seu atendimento, precisamos da sua aprovação quanto aos
-					Termos de Uso e à Política de Privacidade.
+				<>
+					<p>
+						Para seguirmos com o seu atendimento, precisamos da sua aprovação quanto aos
+						Termos de Uso e à Política de Privacidade.
+					</p>
 					<p className='pt-6'>(Fique tranquilo, todos os seus dados são confidenciais)</p>
-				</p>
+				</>
 			),
 			buttonText: 'Aceito',
 			answer: '',
@@ -654,8 +656,6 @@ export const QuestionProvider = ({ children }: PropsWithChildren) => {
 
 	const [questions, setQuestions] = useState<IQuestion[]>(qs)
 
-	console.log(questions)
-
 	// useEffect(() => {
 	// 	setQuestions(
 	// 		questions.map((q, qIndex) => {
@@ -680,7 +680,6 @@ export const QuestionProvider = ({ children }: PropsWithChildren) => {
 				return prev.map((q) => {
 					if (ANSWER_TO_QUESTION_TEXT_RELATION_IDS.get(currentQuestionId) === q.id) {
 						let updatedText = q.text as string
-						console.log('preecnhendo ', profile)
 
 						for (const key of Object.keys(profile as UserProfile)) {
 							const value = profile[key] !== undefined ? profile[key] : ''

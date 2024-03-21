@@ -1,7 +1,7 @@
 import { PropsWithChildren } from 'react'
 export default function PageContainer(props: PropsWithChildren) {
 	return (
-		<div className='w-[90%] min-[835px]:w-[60%] text-white text-[26px] leading-tight font-thin ml-auto mr-auto max-[1400px]:pt-5'>
+		<div className='w-[90%] sm:max-w-[950px] text-white text-base leading-5 sm:text-[26px] sm:leading-9 sm:text-base ml-auto mr-auto 2xl:pt-0 '>
 			{props.children}
 		</div>
 	)

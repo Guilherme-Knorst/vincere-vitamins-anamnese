@@ -8,7 +8,7 @@ interface MultipleSelectProps extends ComponentProps<'input'> {
 
 export default function MultipleSelect({ options, onChangeOption, ...props }: MultipleSelectProps) {
 	return (
-		<div className='flex flex-col flex-wrap gap-2 min-[1400px]:max-h-[500px]'>
+		<div className='flex flex-col flex-wrap gap-2 lg:max-h-[500px]'>
 			{options.map((o) => (
 				<div key={o.name} className='pl-2 flex items-center gap-4'>
 					<label className='w-7 h-7 border border-white rounded-sm flex items-center justify-center mr-2 cursor-pointer mt-1'>

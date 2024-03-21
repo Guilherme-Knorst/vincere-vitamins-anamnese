@@ -12,11 +12,11 @@ export default function Level() {
 
 	return (
 		<div
-			className={`flex flex-col items-center transition-opacity ease-linear duration-1000	flex flex-col items-center gap-10 min-[835px]:justify-center min-h-screen ${
+			className={`flex flex-col items-center transition-opacity ease-linear duration-1000	flex flex-col items-center min-h-screen ${
 				fade ? 'opacity-0' : 'opacity-100'
 			}`}
 		>
-			<img src='/anamnese/img/notas.png' alt='' className='max-w-[600px]' />
+			<img src='/anamnese/img/notas.png' alt='' />
 			<Button
 				onClick={() => {
 					setFade(true)

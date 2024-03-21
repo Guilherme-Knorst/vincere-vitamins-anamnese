@@ -7,18 +7,18 @@ export default function Anamnese() {
 
 	return (
 		<Question.Container
-			header={<Header />}
+			header={<Header text='CYBER ANAMNESE'/>}
 			buttonText='ESTOU PRONTO!'
 			goNext={() => router.push('/question/1')}
 			noAnswer
 		>
 			<>
 				<p>Olá, seja bem-vindo à Eleven!</p>
-				<p className='pt-7'>
+				<p className='pt-4'>
 					Estamos empolgados por tê-lo aqui conosco e queremos parabenizá-lo desde já por
 					buscar também o autoaperfeiçoamento.
 				</p>
-				<p className='pt-10'>
+				<p className='pt-5'>
 					A partir de agora, iremos oferecer uma série de perguntas específicas que nos
 					proporcionarão o mapeamento de todo seu organismo, descobrindo assim pontos
 					falhos para então melhorá-los. Ao final dessa anamnese, teremos informações o
@@ -27,7 +27,7 @@ export default function Anamnese() {
 					bem-estar para cada um dos pilares que compõem seu estilo de vida e objetivos
 					pessoais.
 				</p>
-				<h1 className='pt-10'>Pronto para começar?</h1>
+				<h1 className='pt-8'>Pronto para começar?</h1>
 			</>
 		</Question.Container>
 	)
