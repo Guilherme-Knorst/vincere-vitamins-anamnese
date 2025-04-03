@@ -2,7 +2,7 @@ import React, { ComponentProps } from 'react'
 import { Card } from '../card'
 
 interface InputProps extends ComponentProps<'input'> {
-	placeholder?: string
+	placeholder?: string,
 }
 const Input = React.forwardRef<HTMLInputElement, InputProps>(({ ...props }: InputProps, ref) => {
 	return (

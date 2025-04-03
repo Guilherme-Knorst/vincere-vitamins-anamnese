@@ -4,12 +4,13 @@ import 'tailwindcss/tailwind.css'
 import localFont from 'next/font/local'
 import RootLayout from '../components/layout'
 import { QuestionProvider } from '../providers/QuestionProvider'
+import { QuestionProviderWoman } from '../providers/QuestionProviderWoman'
+import { TermsModalProvider } from '../providers/ModalProvider'
 
 export const purista = localFont({
 	src: [
 		{
 			path: '../public/fonts/PURISTA/Purista.woff2',
-			weight: '100'
 		}
 	],
 	variable: '--font-purista'
@@ -36,9 +37,13 @@ export const digital = localFont({
 export default function MyApp({ Component, pageProps }: AppProps) {
 	return (
 		<RootLayout>
-			<QuestionProvider>
-				<Component {...pageProps} />
-			</QuestionProvider>
+			<TermsModalProvider>
+				<QuestionProvider>
+					<QuestionProviderWoman>
+						<Component {...pageProps} />
+					</QuestionProviderWoman>
+				</QuestionProvider>
+			</TermsModalProvider>
 		</RootLayout>
 	)
 }

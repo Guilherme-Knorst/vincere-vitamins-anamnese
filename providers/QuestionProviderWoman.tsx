@@ -9,7 +9,8 @@ import React, {
 	useEffect,
 	useState
 } from 'react'
-import { formatarTelefoneParaEnvio, mascaraTelefone } from '../utils'
+import { purista } from '../pages/_app'
+import { mascaraTelefone } from '../utils'
 
 export interface CheckBoxOption {
 	name: string
@@ -18,8 +19,8 @@ export interface CheckBoxOption {
 
 export interface IQuestion {
 	header?: ReactNode
-	id: number
 	isNotQuestion?: boolean
+	id: number
 	text: string | ReactNode
 	buttonText?: string
 	hasDynamicText?: boolean
@@ -36,10 +37,10 @@ export interface IQuestion {
 	fillsProfileField?: keyof UserProfile
 }
 
-export interface UserProfile {
+interface UserProfile {
 	[n: string]: string
 	name: string
-	phone: string
+	email: string
 }
 
 interface Context {
@@ -49,14 +50,14 @@ interface Context {
 	updateQuestionArrayWithAnswer: (answer: string | undefined, optionName?: string) => void
 }
 
-export const QuestionContext = createContext<Context>({
+export const QuestionContextWoman = createContext<Context>({
 	questions: [],
 	setQuestions: () => {},
 	updateQuestionArrayWithAnswer: () => {},
 	profile: null
 })
 
-export const QuestionProvider = ({ children }: PropsWithChildren) => {
+export const QuestionProviderWoman = ({ children }: PropsWithChildren) => {
 	const router = useRouter()
 	const currentQuestionId = parseInt(router.query.number as string)
 	const ANSWER_TO_QUESTION_TEXT_RELATION_IDS = new Map([[2, 3]])
@@ -93,13 +94,11 @@ export const QuestionProvider = ({ children }: PropsWithChildren) => {
 			id: 0,
 			text: <>
 							<p>Olá, seja bem-vindo à Eleven!</p>
-							<br/>
-							<p>
+							<p className='pt-4'>
 								Estamos empolgados por tê-lo aqui conosco e queremos parabenizá-lo desde já por
 								buscar também o autoaperfeiçoamento.
 							</p>
-							<br/>
-							<p>
+							<p className='pt-5'>
 								A partir de agora, iremos oferecer uma série de perguntas específicas que nos
 								proporcionarão o mapeamento de todo seu organismo, descobrindo assim pontos
 								falhos para então melhorá-los. Ao final dessa anamnese, teremos informações o
@@ -108,15 +107,14 @@ export const QuestionProvider = ({ children }: PropsWithChildren) => {
 								bem-estar para cada um dos pilares que compõem seu estilo de vida e objetivos
 								pessoais.
 							</p>
-							<br/>
-							<h1>Pronto para começar?</h1>
+							<h1 className='pt-8'>Pronto para começar?</h1>
 						</>,
-			buttonText: 'Estou pronto!',
+			buttonText: 'Aceito',
 			answer: '',
 		},
 		{
-			id: 1,
 			isNotQuestion: true,
+			id: 1,
 			text: (
 				<>
 					<p>Para seguirmos, precisamos de sua aprovação quanto aos Termos de Uso e à Política de Privacidade.</p>
@@ -162,13 +160,12 @@ export const QuestionProvider = ({ children }: PropsWithChildren) => {
 			id: 7,
 			text: 'Qual sua profissão?',
 			inputPlaceholder: 'Digite sua profissão...',
-			answer: '' 
+			answer: ''
 		},
 		{
 			id: 8,
-			text: 'Para qual número de WhatsApp deseja que enviemos seus resultados?',
-			inputPlaceholder: '(51) 99583-1736',
-			fillsProfileField: "phone",
+			text: 'Para qual número deseja que enviemos seus resultados?',
+			inputPlaceholder: 'Digite seu melhor número...',
 			formatter: mascaraTelefone,
 			maxLength: 15,
 			answer: ''
@@ -502,15 +499,15 @@ export const QuestionProvider = ({ children }: PropsWithChildren) => {
 		},
 		{
 			id: 49,
-			text: 'Tem convivido com falta de lubrificação?',
-			buttonOptions: ['Não'],
-			inputPlaceholder: 'Sim, digite aqui...',
+			text: 'Já utilizou algum método contraceptivo?',
+			buttonOptions: ['Não', 'Anticoncepcional', 'DIU Hormonal'],
+			inputPlaceholder: 'Outro, digite aqui...',
 			iconName: 'libido',
 			answer: ''
 		},
 		{
 			id: 50,
-			text: 'Tem convivido com dificuldade de ereção?',
+			text: 'Atualmente ainda utiliza algum método contraceptivo?',
 			buttonOptions: ['Não'],
 			inputPlaceholder: 'Sim, digite aqui...',
 			iconName: 'libido',
@@ -518,6 +515,22 @@ export const QuestionProvider = ({ children }: PropsWithChildren) => {
 		},
 		{
 			id: 51,
+			text: 'Tem variações na libido ao longo do mês?',
+			buttonOptions: ['Não'],
+			inputPlaceholder: 'Sim, digite aqui...',
+			iconName: 'libido',
+			answer: ''
+		},
+		{
+			id: 52,
+			text: 'Tem convivido com falta de lubrificação?',
+			buttonOptions: ['Não'],
+			inputPlaceholder: 'Sim, digite aqui...',
+			iconName: 'libido',
+			answer: ''
+		},
+		{
+			id: 53,
 			text: 'Como você classificaria seu nível atual de apetite sexual de 0 a 10',
 			buttonOptions: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
 			isSmallButton: true,
@@ -525,14 +538,14 @@ export const QuestionProvider = ({ children }: PropsWithChildren) => {
 			answer: ''
 		},
 		{
-			id: 52,
+			id: 54,
 			text: 'Você tem enfrentado problemas com queda de cabelo?',
 			buttonOptions: ['Sim', 'Não'],
 			iconName: 'cabelo-unha',
 			answer: ''
 		},
 		{
-			id: 53,
+			id: 55,
 			text: 'Como você classificaria a saúde atual do seu cabelo de 0 a 10',
 			buttonOptions: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
 			isSmallButton: true,
@@ -540,14 +553,14 @@ export const QuestionProvider = ({ children }: PropsWithChildren) => {
 			answer: ''
 		},
 		{
-			id: 54,
+			id: 56,
 			text: 'Suas unhas quebram facilmente ou têm manchas?',
 			buttonOptions: ['Sim', 'Não'],
 			iconName: 'cabelo-unha',
 			answer: ''
 		},
 		{
-			id: 55,
+			id: 57,
 			text: 'Como você classificaria a saúde atual de suas unhas de 0 a 10',
 			buttonOptions: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
 			isSmallButton: true,
@@ -555,21 +568,21 @@ export const QuestionProvider = ({ children }: PropsWithChildren) => {
 			answer: ''
 		},
 		{
-			id: 56,
+			id: 58,
 			text: 'Tem tido problemas com caspas?',
 			buttonOptions: ['Sim', 'Não'],
 			iconName: 'pele',
 			answer: ''
 		},
 		{
-			id: 57,
+			id: 59,
 			text: 'Como descreveria seu tipo de pele?',
 			buttonOptions: ['Seca', 'Oleosa', 'Mista', 'Normal'],
 			iconName: 'pele',
 			answer: ''
 		},
 		{
-			id: 58,
+			id: 60,
 			text: 'Quais são suas principais preocupações com a pele?',
 			options: [
 				{ name: 'Acnes', isChecked: false },
@@ -584,7 +597,7 @@ export const QuestionProvider = ({ children }: PropsWithChildren) => {
 			answer: ''
 		},
 		{
-			id: 59,
+			id: 61,
 			text: 'Possui alguma doença relacionada a pele?',
 			options: [
 				{ name: 'Psoríase', isChecked: false },
@@ -596,21 +609,21 @@ export const QuestionProvider = ({ children }: PropsWithChildren) => {
 			answer: ''
 		},
 		{
-			id: 60,
+			id: 62,
 			text: 'Você se expõe ao sol diariamente?',
 			buttonOptions: ['Sempre', 'Às vezes', 'Raramente'],
 			iconName: 'pele',
 			answer: ''
 		},
 		{
-			id: 61,
+			id: 63,
 			text: 'Faz uso de protetor solar?',
 			buttonOptions: ['Sim', 'Não'],
 			iconName: 'pele',
 			answer: ''
 		},
 		{
-			id: 62,
+			id: 64,
 			text: 'Como você classificaria a saúde atual da sua pele de 0 a 10',
 			buttonOptions: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
 			isSmallButton: true,
@@ -618,7 +631,7 @@ export const QuestionProvider = ({ children }: PropsWithChildren) => {
 			answer: ''
 		},
 		{
-			id: 63,
+			id: 65,
 			text: (
 				<>
 					<p>Ótimo, até aqui tudo está claro e anotado</p>
@@ -641,19 +654,19 @@ export const QuestionProvider = ({ children }: PropsWithChildren) => {
 			answer: ''
 		},
 		{
-			id: 64,
+			id: 66,
 			text: 'Você frequentemente pratica grounding, pisando descalço diretamente em contato com a terra?',
 			buttonOptions: ['Sim', 'Não'],
 			answer: ''
 		},
 		{
-			id: 65,
+			id: 67,
 			text: 'Com que frequência pratica atividades físicas na semana?',
 			buttonOptions: ['1 a 2 vezes', '3 a 4 vezes', '5 ou mais vezes', 'Nenhuma'],
 			answer: ''
 		},
 		{
-			id: 66,
+			id: 68,
 			text: 'Em qual período costuma praticá las?',
 			options: [
 				{ name: 'Manhã', isChecked: false },
@@ -664,14 +677,14 @@ export const QuestionProvider = ({ children }: PropsWithChildren) => {
 			answer: ''
 		},
 		{
-			id: 67,
+			id: 69,
 			text: 'Quais são os tipos de atividade que pratica?',
 			buttonOptions: ['Não pratico'],
 			inputPlaceholder: 'Por favor, digite aqui...',
 			answer: ''
 		},
 		{
-			id: 68,
+			id: 70,
 			text: 'Qual o principal objetivo de suas práticas?',
 			options: [
 				{ name: 'Saúde', isChecked: false },
@@ -682,21 +695,21 @@ export const QuestionProvider = ({ children }: PropsWithChildren) => {
 			answer: ''
 		},
 		{
-			id: 69,
+			id: 71,
 			text: 'Já fez alguma cirurgia?',
 			buttonOptions: ['Não'],
 			inputPlaceholder: 'Sim, especifique...',
 			answer: ''
 		},
 		{
-			id: 70,
+			id: 72,
 			text: 'Já teve algum tipo de câncer?',
 			buttonOptions: ['Não'],
 			inputPlaceholder: 'Sim, especifique...',
 			answer: ''
 		},
 		{
-			id: 71,
+			id: 73,
 			text: 'Você possui alguma das seguintes condições?',
 			options: [
 				{ name: 'Rinite alérgica', isChecked: false },
@@ -722,42 +735,42 @@ export const QuestionProvider = ({ children }: PropsWithChildren) => {
 			answer: ''
 		},
 		{
-			id: 72,
+			id: 74,
 			text: 'Sente dores ou possui algum tipo de lesão?',
 			buttonOptions: ['Não'],
 			inputPlaceholder: 'Sim, especifique...',
 			answer: ''
 		},
 		{
-			id: 73,
+			id: 75,
 			text: 'Já teve ou tem algum tipo de distúrbio alimentar?',
 			buttonOptions: ['Não'],
 			inputPlaceholder: 'Sim, especifique...',
 			answer: ''
 		},
 		{
-			id: 74,
+			id: 76,
 			text: 'Você tem alguma alergia medicamentosa?',
 			buttonOptions: ['Não'],
 			inputPlaceholder: 'Sim, especifique...',
 			answer: ''
 		},
 		{
-			id: 75,
+			id: 77,
 			text: 'Toma algum medicamento regularmente? (Se sim, quais?)',
 			buttonOptions: ['Não'],
 			inputPlaceholder: 'Sim, especifique...',
 			answer: ''
 		},
 		{
-			id: 76,
+			id: 78,
 			text: 'Você possui alguma outra condição crônica que necessite acompanhamento médico ou que seja importante relatar?',
 			buttonOptions: ['Não'],
 			inputPlaceholder: 'Sim, especifique...',
 			answer: ''
 		},
 		{
-			id: 77,
+			id: 79,
 			text: 'Nos últimos meses utilizou medicamentos para algum desses motivos?',
 			options: [
 				{ name: 'Anticoagulantes', isChecked: false },
@@ -781,38 +794,38 @@ export const QuestionProvider = ({ children }: PropsWithChildren) => {
 			answer: ''
 		},
 		{
-			id: 78,
+			id: 80,
 			text: 'Tem alguma contra indicação para suplementação com ferro?',
 			buttonOptions: ['Não'],
 			inputPlaceholder: 'Sim, especifique...',
 			answer: ''
 		},
 		{
-			id: 79,
+			id: 81,
 			text: 'Utiliza desodorante spray tradicional (com alumínio)?',
 			buttonOptions: ['Sim', 'Não'],
 			answer: ''
 		},
 		{
-			id: 80,
+			id: 82,
 			text: 'Utiliza pastas de dente tradicionais (com flúor)?',
 			buttonOptions: ['Sim', 'Não'],
 			answer: ''
 		},
 		{
-			id: 81,
+			id: 83,
 			text: 'Em sua alimentação, consome peixes com frequência? (mercúrio)',
 			buttonOptions: ['Sim', 'Não'],
 			answer: ''
 		},
 		{
-			id: 82,
+			id: 84,
 			text: 'Quando foi a última vez em que realizou um protocolo de desparasitação contra vermes?',
 			buttonOptions: ['Nunca fiz', 'Há mais de 1 ano', 'Fiz recentemente'],
 			answer: ''
 		},
 		{
-			id: 83,
+			id: 85,
 			text: 'Há mais alguma questão de saúde que gostaria de mencionar',
 			buttonOptions: ['Não'],
 			inputPlaceholder: 'Sim, especifique...',
@@ -820,7 +833,7 @@ export const QuestionProvider = ({ children }: PropsWithChildren) => {
 		},
 		{
 			isNotQuestion: true,
-			id: 84,
+			id: 86,
 			text: (
 				<>
 					<p>Muito bem, finalizamos essa primeira etapa</p>
@@ -910,14 +923,14 @@ export const QuestionProvider = ({ children }: PropsWithChildren) => {
 	}
 
 	return (
-		<QuestionContext.Provider
+		<QuestionContextWoman.Provider
 			value={{ questions, setQuestions, updateQuestionArrayWithAnswer, profile }}
 		>
 			{children}
-		</QuestionContext.Provider>
+		</QuestionContextWoman.Provider>
 	)
 }
 
-export function useQuestions() {
-	return useContext(QuestionContext)
+export function useQuestionsWoman() {
+	return useContext(QuestionContextWoman)
 }

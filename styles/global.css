@@ -71,4 +71,6 @@ body {
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
+	scrollbar-color: black orange;
+  scrollbar-width: thin;
 }
