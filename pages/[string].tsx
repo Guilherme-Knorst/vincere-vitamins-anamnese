@@ -1,9 +1,9 @@
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
-import { useQuestions } from '../../providers/QuestionProvider'
-import { formatarTelefoneParaEnvio } from '../../utils'
+import { useQuestions } from '../providers/QuestionProvider'
+import { formatarTelefoneParaEnvio } from '../utils'
 import Question from './man/[number]'
-import { useQuestionsWoman } from '../../providers/QuestionProviderWoman'
+import { useQuestionsWoman } from '../providers/QuestionProviderWoman'
 
 export default function End() {
 	const router = useRouter()

@@ -111,7 +111,7 @@ export const QuestionProvider = ({ children }: PropsWithChildren) => {
 							<br/>
 							<h1>Pronto para começar?</h1>
 						</>,
-			buttonText: 'Estou pronto!',
+			buttonOptions: ['Estou pronto!'],
 			answer: '',
 		},
 		{
@@ -123,7 +123,7 @@ export const QuestionProvider = ({ children }: PropsWithChildren) => {
 					<p className='pt-6'>(Fique tranquilo, todos os seus dados são confidenciais)</p>
 				</>
 			),
-			buttonText: 'Aceito',
+			buttonOptions: ['Estou pronto!'],
 			answer: '',
 		},
 		{
@@ -190,7 +190,7 @@ export const QuestionProvider = ({ children }: PropsWithChildren) => {
 					</p>
 				</>
 			),
-			buttonText: 'Continuar',
+			buttonOptions: ['Continuar'],
 			answer: '',
 		},
 		{
@@ -204,7 +204,7 @@ export const QuestionProvider = ({ children }: PropsWithChildren) => {
 					<p className='pt-6'>03. Esteja disposto a reconhecer imperfeições, pois este é o ponto de partida para alcançar seus objetivos.</p>
 				</>
 			),
-			buttonText: 'Estou Pronto!',
+			buttonOptions: ['Estou Pronto!'],
 			answer: '',
 		},
 		{

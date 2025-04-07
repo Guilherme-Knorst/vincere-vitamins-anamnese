@@ -1,9 +1,8 @@
-import { IQuestion, useQuestions } from '../../../providers/QuestionProvider'
+import { IQuestion, useQuestions } from '../../providers/QuestionProvider'
 import {
 	ChangeEventHandler,
 	MouseEvent,
 	PropsWithChildren,
-	ReactNode,
 	RefObject,
 	useEffect,
 	useMemo,
@@ -11,12 +10,12 @@ import {
 	useState
 } from 'react'
 import { useRouter } from 'next/router'
-import Button from '../../../components/button'
-import { Card } from '../../../components/card'
-import Input from '../../../components/input'
-import MultipleSelect from '../../../components/multipleSelect'
-import { useTermsModal } from '../../../providers/ModalProvider'
-import TermsModal from '../../../components/modal'
+import Button from '../../components/button'
+import { Card } from '../../components/card'
+import Input from '../../components/input'
+import MultipleSelect from '../../components/multipleSelect'
+import { useTermsModal } from '../../providers/ModalProvider'
+import TermsModal from '../../components/modal'
 
 function Question() {
 	const router = useRouter()
@@ -52,14 +51,11 @@ function Question() {
 	}, [router])
 
 	const next = () => {
-		router.push('/anamnese/man/' + (currentQuestionId + 1))
+		router.push('/man/' + (currentQuestionId + 1))
 	}
 
 	return (
-		<Question.Container
-			question={currentQuestion}
-			goNext={next}
-		>
+		<Question.Container question={currentQuestion} goNext={next}>
 			{currentQuestion?.text}
 		</Question.Container>
 	)
@@ -80,8 +76,9 @@ Question.Container = ({
 }: QuestionContainerProps) => {
 	const [fade, setFade] = useState(true)
 	const { updateQuestionArrayWithAnswer, questions, profile } = useQuestions()
-	const { openTermsModal, isTermsAccepted, setIsTermsAccepted, isModalOpen, setIsModalOpen } = useTermsModal()
-	const [answer, setAnswer] = useState<string>(question?.answer ?? "")
+	const { openTermsModal, isTermsAccepted, setIsTermsAccepted, isModalOpen, setIsModalOpen } =
+		useTermsModal()
+	const [answer, setAnswer] = useState<string>(question?.answer ?? '')
 	const inputRef = useRef() as RefObject<HTMLInputElement>
 	const router = useRouter()
 
@@ -120,14 +117,14 @@ Question.Container = ({
 	}
 
 	const handleAnswer = (e: MouseEvent<HTMLButtonElement>) => {
-		
-		if (question?.id == 84) { //84
+		if (question?.id == 9) {
+			//84
 			setFade(true)
 			setTimeout(() => {
 				router.push(
-					{ pathname: "/anamnese/end", query: { genre: 'm', gringe: 63 } },
-					"/anamnese/end"
-				);
+					{ pathname: '/end', query: { genre: 'm', gringe: 63 } },
+					'/end'
+				)
 			}, 400)
 			return
 		}
@@ -138,7 +135,7 @@ Question.Container = ({
 		}
 
 		setFade(true)
-		
+
 		if (answer === '') {
 			const btnAnswer = (e.target as HTMLElement).innerText
 			updateQuestionArrayWithAnswer(btnAnswer)
@@ -154,7 +151,7 @@ Question.Container = ({
 
 	const isChecked = useMemo(() => question?.options?.some((o) => o.isChecked), [question])
 
-	const canGoNext = answer !== "" || question?.isNotQuestion || isChecked
+	const canGoNext = answer !== '' || question?.isNotQuestion || isChecked
 
 	return (
 		<>
@@ -163,11 +160,7 @@ Question.Container = ({
 					fade ? 'opacity-0' : 'opacity-100'
 				}`}
 			>
-				{
-					question?.header ? (
-						question.header
-					) : null
-				}
+				{question?.header ? question.header : null}
 
 				{/* {
 					question?.iconName ? (
@@ -240,33 +233,37 @@ Question.Container = ({
 					</Button>
 				)} */}
 			</div>
-			<TermsModal isOpen={isModalOpen} onAccept={acceptTerms} onClose={() => router.push("/")} />
+			<TermsModal
+				isOpen={isModalOpen}
+				onAccept={acceptTerms}
+				onClose={() => router.push('/')}
+			/>
 		</>
 	)
 }
 
 export default Question
 
-	// useEffect(() => {
-	// 	if (currentQuestion) {
-	// 		checkForConditionalDisplay()
-	// 	}
-	// }, [currentQuestionId])
+// useEffect(() => {
+// 	if (currentQuestion) {
+// 		checkForConditionalDisplay()
+// 	}
+// }, [currentQuestionId])
 
-	// const checkForConditionalDisplay = () => {
-	// 	if (!currentQuestion.conditionalToQuestion) return
+// const checkForConditionalDisplay = () => {
+// 	if (!currentQuestion.conditionalToQuestion) return
 
-	// 	const targetQuestion = questions[(currentQuestion.conditionalToQuestion[0] as number) - 1]
+// 	const targetQuestion = questions[(currentQuestion.conditionalToQuestion[0] as number) - 1]
 
-	// 	if (!targetQuestion) return
+// 	if (!targetQuestion) return
 
-	// 	const isCurrentQuestionAllowedToDisplay =
-	// 		targetQuestion.answer === currentQuestion.conditionalToQuestion[1]
+// 	const isCurrentQuestionAllowedToDisplay =
+// 		targetQuestion.answer === currentQuestion.conditionalToQuestion[1]
 
-	// 	if (!isCurrentQuestionAllowedToDisplay) {
-	// 		if (currentQuestionId === 6) {
-	// 			updateQuestionArrayWithAnswer(targetQuestion.answer)
-	// 		}
-	// 		next()
-	// 	}
-	// }
+// 	if (!isCurrentQuestionAllowedToDisplay) {
+// 		if (currentQuestionId === 6) {
+// 			updateQuestionArrayWithAnswer(targetQuestion.answer)
+// 		}
+// 		next()
+// 	}
+// }
