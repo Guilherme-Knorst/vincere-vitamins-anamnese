@@ -189,11 +189,11 @@ const TermsModal = ({ isOpen, onAccept, onClose }: TermProps) => {
           >
             Fechar
           </ButtonModal>
-					<ButtonModal
+					{/* <ButtonModal
             onClick={onAccept}
           >
             Eu li e aceito
-          </ButtonModal>
+          </ButtonModal> */}
         </div>
       </div>
     </div>

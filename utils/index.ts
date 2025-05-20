@@ -6,6 +6,21 @@ function mascaraTelefone(phone: string) {
   return phone
 }
 
+function mascaraData(data: string) {
+  	let v = data.replace(/\D/g, '');
+
+    // inserir barra após dia
+    if (v.length > 2) {
+      v = v.slice(0, 2) + '/' + v.slice(2);
+    }
+
+    // inserir barra após mês
+    if (v.length > 5) {
+      v = v.slice(0, 5) + '/' + v.slice(5, 9);
+    }
+
+   return  v;
+}
 
 function formatarTelefoneParaEnvio(phone: string) {
   // Remove tudo que não é número
@@ -19,4 +34,4 @@ function formatarTelefoneParaEnvio(phone: string) {
   return numeros;
 }
 
-export { mascaraTelefone, formatarTelefoneParaEnvio };
+export { mascaraTelefone, mascaraData, formatarTelefoneParaEnvio };

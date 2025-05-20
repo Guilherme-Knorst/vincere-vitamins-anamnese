@@ -117,12 +117,17 @@ Question.Container = ({
 	}
 
 	const handleAnswer = (e: MouseEvent<HTMLButtonElement>) => {
-		if (question?.id == 86) {
+		if(question?.id == 100){
+			setFade(true)
+			goNext()
+			return
+		}
+		if (question?.id == 88) {
 			setFade(true)
 			setTimeout(() => {
 				router.push(
-					{ pathname: '/end', query: { genre: 'w', gringe: 65 } },
-					'/end'
+					{ pathname: '/result', query: { genre: 'w', gringe: 65 } },
+					'/result'
 				)
 			}, 400)
 			return
@@ -150,12 +155,12 @@ Question.Container = ({
 
 	const isChecked = useMemo(() => question?.options?.some((o) => o.isChecked), [question])
 
-	const canGoNext = () => (answer && answer != '') || question?.isNotQuestion || isChecked
+	const canGoNext = answer !== '' || question?.isNotQuestion || isChecked
 
 	return (
 		<>
 			<div
-				className={`transition-opacity ease-linear duration-400	flex flex-col items-center justify-start sm:justify-center gap-10 min-h-full ${
+				className={`pt-6 min-h-screen transition-opacity ease-linear duration-400 flex flex-col items-center justify-start sm:justify-center gap-10 min-h-full ${
 					fade ? 'opacity-0' : 'opacity-100'
 				}`}
 			>
@@ -180,7 +185,7 @@ Question.Container = ({
 							options={question.options}
 						/>
 						{!question.inputPlaceholder && (
-							<Button onClick={handleAnswer} disabled={!canGoNext()}>
+							<Button onClick={handleAnswer} disabled={!canGoNext}>
 								{buttonText}
 							</Button>
 						)}
@@ -193,7 +198,7 @@ Question.Container = ({
 									autoFocus
 									ref={inputRef}
 								/>
-								<Button onClick={handleAnswer} disabled={!canGoNext()}>
+								<Button onClick={handleAnswer} disabled={!canGoNext}>
 									{buttonText}
 								</Button>
 							</div>
@@ -219,7 +224,7 @@ Question.Container = ({
 							placeholder={question.inputPlaceholder}
 							ref={inputRef}
 						/>
-						<Button onClick={handleAnswer} disabled={!canGoNext()}>
+						<Button onClick={handleAnswer} disabled={!canGoNext}>
 							{buttonText}
 						</Button>
 					</div>

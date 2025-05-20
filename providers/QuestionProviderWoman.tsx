@@ -69,7 +69,7 @@ export const QuestionProviderWoman = ({ children }: PropsWithChildren) => {
 				<div className='flex flex-col items-center relative'>
 				<img
 						className='w-[11rem] sm:w-[22rem] pb-1'
-						src='/img/eleven.jpeg'
+						src='/anamnese/img/eleven.jpeg'
 						alt=''
 					/>
 					{/* <img
@@ -826,6 +826,20 @@ export const QuestionProviderWoman = ({ children }: PropsWithChildren) => {
 		},
 		{
 			id: 85,
+			text: 'Você tem ideia de qual é, aproximadamente, a sua pressão arterial hoje?',
+			buttonOptions: ['Não sei'],
+			inputPlaceholder: 'Digite aqui...',
+			answer: ''
+		},
+		{
+			id: 86,
+			text: 'Você tem ideia de qual é, aproximadamente, o seu percentual de gordura atual?',
+			buttonOptions: ['Não sei'],
+			inputPlaceholder: 'Digite aqui...',
+			answer: ''
+		},
+		{
+			id: 87,
 			text: 'Há mais alguma questão de saúde que gostaria de mencionar',
 			buttonOptions: ['Não'],
 			inputPlaceholder: 'Sim, especifique...',
@@ -833,7 +847,7 @@ export const QuestionProviderWoman = ({ children }: PropsWithChildren) => {
 		},
 		{
 			isNotQuestion: true,
-			id: 86,
+			id: 88,
 			text: (
 				<>
 					<p>Muito bem, finalizamos essa primeira etapa</p>

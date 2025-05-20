@@ -19,10 +19,11 @@ import TermsModal from '../../components/modal'
 
 function Question() {
 	const router = useRouter()
-	const { number } = router.query
+	const { number, onlyNotes } = router.query
 	const currentQuestionId = parseInt(number as string)
 	const { questions } = useQuestions()
 	const currentQuestion = questions[currentQuestionId]
+	const notesQuestions = [16,21,26,29,34,42,48,51,53,55,62]
 
 	useEffect(() => {
 		router.beforePopState(({ as }) => {
@@ -84,9 +85,9 @@ Question.Container = ({
 
 	const formattedAnswer = useMemo(() => question?.formatter?.(answer) ?? answer, [answer])
 
-	useEffect(() => {
-		setFade(false)
-	}, [])
+	// useEffect(() => {
+	// 	setFade(false)
+	// }, [])
 
 	useEffect(() => {
 		if (inputRef.current) {
@@ -117,22 +118,27 @@ Question.Container = ({
 	}
 
 	const handleAnswer = (e: MouseEvent<HTMLButtonElement>) => {
+		if(question?.id == 100){
+			setFade(true)
+			goNext()
+			return
+		}
 		if (question?.id == 9) {
-			//84
+			//86
 			setFade(true)
 			setTimeout(() => {
 				router.push(
-					{ pathname: '/end', query: { genre: 'm', gringe: 63 } },
-					'/end'
+					{ pathname: '/result', query: { genre: 'm', gringe: 63 } },
+					'/result'
 				)
 			}, 400)
 			return
 		}
 
-		if (question?.id == 1 && isTermsAccepted === false) {
-			openTermsModal()
-			return
-		}
+		// if (question?.id == 1 && isTermsAccepted === false) {
+		// 	openTermsModal()
+		// 	return
+		// }
 
 		setFade(true)
 
@@ -172,7 +178,7 @@ Question.Container = ({
 					) : null
 				} */}
 
-				<Card>{props.children}</Card>
+				<Card>{props.children} {question?.id === 1 && <a className='underline text-primary hover:text-secondary visited:text-purple-600 pt-6' onClick={openTermsModal}>Clique aqui para visualizar</a>}</Card>
 
 				{question?.options && (
 					<div className='flex flex-col items-center gap-10'>
@@ -236,7 +242,7 @@ Question.Container = ({
 			<TermsModal
 				isOpen={isModalOpen}
 				onAccept={acceptTerms}
-				onClose={() => router.push('/')}
+				onClose={() => setIsModalOpen(false)}
 			/>
 		</>
 	)

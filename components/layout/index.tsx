@@ -2,7 +2,6 @@ import { PropsWithChildren } from 'react'
 import { purista } from '../../pages/_app'
 import Head from 'next/head'
 import PageContainer from '../pageContainer'
-import { Document } from 'postcss'
 
 const RootLayout = ({ children }: PropsWithChildren) => {
 	return (

@@ -9,7 +9,7 @@ import React, {
 	useEffect,
 	useState
 } from 'react'
-import { formatarTelefoneParaEnvio, mascaraTelefone } from '../utils'
+import { mascaraData, mascaraTelefone } from '../utils'
 
 export interface CheckBoxOption {
 	name: string
@@ -68,7 +68,7 @@ export const QuestionProvider = ({ children }: PropsWithChildren) => {
 				<div className='flex flex-col items-center relative'>
 				<img
 						className='w-[11rem] sm:w-[22rem] pb-1'
-						src='/img/eleven.jpeg'
+						src='/anamnese/img/eleven.jpeg'
 						alt=''
 					/>
 					{/* <img
@@ -123,7 +123,7 @@ export const QuestionProvider = ({ children }: PropsWithChildren) => {
 					<p className='pt-6'>(Fique tranquilo, todos os seus dados são confidenciais)</p>
 				</>
 			),
-			buttonOptions: ['Estou pronto!'],
+			buttonOptions: ['Aceito os termos'],
 			answer: '',
 		},
 		{
@@ -138,6 +138,7 @@ export const QuestionProvider = ({ children }: PropsWithChildren) => {
 			text: 'Ok {name}, qual sua data de nascimento?',
 			hasDynamicText: true,
 			inputPlaceholder: '00/00/0000',
+			formatter: mascaraData,
 			answer: ''
 		},
 		{
@@ -155,7 +156,7 @@ export const QuestionProvider = ({ children }: PropsWithChildren) => {
 		{
 			id: 6,
 			text: 'Qual seu peso atual?',
-			inputPlaceholder: 'Digite seu peso atual...',
+			inputPlaceholder: 'Digite seu peso atual (kg)...',
 			answer: ''
 		},
 		{
@@ -528,7 +529,7 @@ export const QuestionProvider = ({ children }: PropsWithChildren) => {
 			id: 52,
 			text: 'Você tem enfrentado problemas com queda de cabelo?',
 			buttonOptions: ['Sim', 'Não'],
-			iconName: 'cabelo-unha',
+			iconName: 'cabelo',
 			answer: ''
 		},
 		{
@@ -536,14 +537,14 @@ export const QuestionProvider = ({ children }: PropsWithChildren) => {
 			text: 'Como você classificaria a saúde atual do seu cabelo de 0 a 10',
 			buttonOptions: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
 			isSmallButton: true,
-			iconName: 'cabelo-unha',
+			iconName: 'cabelo',
 			answer: ''
 		},
 		{
 			id: 54,
 			text: 'Suas unhas quebram facilmente ou têm manchas?',
 			buttonOptions: ['Sim', 'Não'],
-			iconName: 'cabelo-unha',
+			iconName: 'unha',
 			answer: ''
 		},
 		{
@@ -551,7 +552,7 @@ export const QuestionProvider = ({ children }: PropsWithChildren) => {
 			text: 'Como você classificaria a saúde atual de suas unhas de 0 a 10',
 			buttonOptions: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
 			isSmallButton: true,
-			iconName: 'cabelo-unha',
+			iconName: 'unha',
 			answer: ''
 		},
 		{
@@ -813,14 +814,28 @@ export const QuestionProvider = ({ children }: PropsWithChildren) => {
 		},
 		{
 			id: 83,
-			text: 'Há mais alguma questão de saúde que gostaria de mencionar',
+			text: 'Você tem ideia de qual é, aproximadamente, a sua pressão arterial hoje?',
+			buttonOptions: ['Não sei'],
+			inputPlaceholder: 'Digite aqui...',
+			answer: ''
+		},
+		{
+			id: 84,
+			text: 'Você tem ideia de qual é, aproximadamente, o seu percentual de gordura atual?',
+			buttonOptions: ['Não sei'],
+			inputPlaceholder: 'Digite aqui...',
+			answer: ''
+		},
+		{
+			id: 85,
+			text: 'Há mais alguma questão de saúde que gostaria de mencionar?',
 			buttonOptions: ['Não'],
 			inputPlaceholder: 'Sim, especifique...',
 			answer: ''
 		},
 		{
 			isNotQuestion: true,
-			id: 84,
+			id: 86,
 			text: (
 				<>
 					<p>Muito bem, finalizamos essa primeira etapa</p>
@@ -829,7 +844,7 @@ export const QuestionProvider = ({ children }: PropsWithChildren) => {
 						atuais.
 					</p>
 					<p className='pt-6'>Sua auto análise está pronta...</p>
-					<p>Preparado(a) para vê-la?</p>
+					<p className='pt-6'>Preparado(a) para vê-la?</p>
 				</>
 			),
 			buttonOptions: ['Gerar relatório...'],
