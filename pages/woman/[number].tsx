@@ -191,13 +191,22 @@ Question.Container = ({
 						)}
 						{question.inputPlaceholder && (
 							<div className='flex flex-col gap-10'>
+								{question?.buttonOptions && (
+									<div className='flex flex-wrap justify-center gap-6 pt-5'>
+										{question.buttonOptions.map((o) => (
+											<Button key={o} onClick={handleAnswer} small={question.isSmallButton}>
+												{o}
+											</Button>
+										))}
+									</div>
+								)}
 								<Input
 									value={formattedAnswer}
 									onChange={(e) => setAnswer(e.target.value)}
 									placeholder={question.inputPlaceholder}
 									autoFocus
 									ref={inputRef}
-									maxLength={question.maxLength ?? 150}
+									maxLength={question.maxLength ?? 250}
 								/>
 								<Button onClick={handleAnswer} disabled={!canGoNext}>
 									{buttonText}
@@ -224,7 +233,7 @@ Question.Container = ({
 							onChange={(e) => setAnswer(e.target.value)}
 							placeholder={question.inputPlaceholder}
 							ref={inputRef}
-							maxLength={question.maxLength ?? 150}
+							maxLength={question.maxLength ?? 250}
 						/>
 						<Button onClick={handleAnswer} disabled={!canGoNext}>
 							{buttonText}

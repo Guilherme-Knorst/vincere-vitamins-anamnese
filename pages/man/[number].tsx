@@ -207,7 +207,7 @@ Question.Container = ({
 									placeholder={question.inputPlaceholder}
 									autoFocus
 									ref={inputRef}
-									maxLength={question.maxLength ?? 150}
+									maxLength={question.maxLength ?? 250}
 								/>
 								<Button onClick={handleAnswer} disabled={!canGoNext}>
 									{buttonText}
@@ -234,7 +234,7 @@ Question.Container = ({
 							onChange={(e) => setAnswer(e.target.value)}
 							placeholder={question.inputPlaceholder}
 							ref={inputRef}
-							maxLength={question.maxLength ?? 150}
+							maxLength={question.maxLength ?? 250}
 						/>
 						<Button onClick={handleAnswer} disabled={!canGoNext}>
 							{buttonText}
