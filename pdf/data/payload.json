@@ -1,0 +1,384 @@
+{
+  "name": "Guilherme André Lopes Knorst",
+  "phone": "5195831736",
+  "anamnese": [
+    {
+      "title": "Qual seu nome completo?",
+      "answer": "Guilherme André Lopes Knorst"
+    },
+    {
+      "title": "Ok Guilherme André Lopes Knorst, qual sua data de nascimento?",
+      "answer": "29/08/1998"
+    },
+    {
+      "title": "Qual sua idade?",
+      "answer": "26 anos"
+    },
+    {
+      "title": "Qual é a sua altura (em cm)? (Se for 1,80, digite 180)",
+      "answer": "1,74cm"
+    },
+    {
+      "title": "Qual seu peso atual?",
+      "answer": "60kg"
+    },
+    {
+      "title": "Qual sua profissão?",
+      "answer": "Desenvolvedor de Software"
+    },
+    {
+      "title": "Para qual número de WhatsApp deseja que enviemos seus resultados?",
+      "answer": "(51) 995831736"
+    },
+    {
+      "title": "Para começarmos, gostaria de saber com que frequência contraiu gripes, resfriados ou outras infecções no último ano? (Nunca, Raramente, 2 a 3 vezes, 4 ou mais vezes)",
+      "answer": ""
+    },
+    {
+      "title": "Como percebe a queda da sua imunidade? (Gripes e resfriados, Dores de garganta, Herpes)",
+      "answer": ""
+    },
+    {
+      "title": "Tem histórico de doenças autoimunes? (Não)",
+      "answer": ""
+    },
+    {
+      "title": "Você sente que sua cicatrização é lenta? (Sim, Não)",
+      "answer": ""
+    },
+    {
+      "title": "Tem alergias ou intolerâncias alimentares? (Não)",
+      "answer": ""
+    },
+    {
+      "title": "Como você classificaria seu nível atual de imunidade de 0 a 10?",
+      "answer": ""
+    },
+    {
+      "title": "Com que frequência você evacua? (1x/dia, 2x ou mais/dia, Constipação)",
+      "answer": ""
+    },
+    {
+      "title": "Sente inchaço ou gases frequentes? (Sim, Não)",
+      "answer": ""
+    },
+    {
+      "title": "Tem convivido com episódios de refluxo ou azia? (Sim, Não)",
+      "answer": ""
+    },
+    {
+      "title": "Sente que algum alimento piora sua digestão? (Não)",
+      "answer": ""
+    },
+    {
+      "title": "Como você classificaria seu processo digestivo de 0 a 10",
+      "answer": ""
+    },
+    {
+      "title": "Você sente energia suficiente para realizar suas atividades diárias? (Sim, Às vezes, Raramente, Nunca)",
+      "answer": ""
+    },
+    {
+      "title": "Como é seu nível de atividade física? (Sedentário, Moderado, Intenso)",
+      "answer": ""
+    },
+    {
+      "title": "Em que momentos do dia você percebe maior queda de energia? (Durante a manhã, Meio dia, Durante a tarde, Final do dia)",
+      "answer": ""
+    },
+    {
+      "title": "Já teve diagnóstico ou suspeita de deficiência de alguma vitamina ou mineral (ferro, Vitamina D, B12 e outros)? (Não)",
+      "answer": ""
+    },
+    {
+      "title": "Já teve diagnóstico ou suspeita de deficiência de algum hormônio? (Não)",
+      "answer": ""
+    },
+    {
+      "title": "Como você classificaria seu nível atual de energia de 0 a 10",
+      "answer": ""
+    },
+    {
+      "title": "Você costuma ter dificuldades em manter o foco em suas atividades? (Sempre, Às vezes, Raramente, Nunca)",
+      "answer": ""
+    },
+    {
+      "title": "Consome estimulantes como café, chá preto, pré-treinos ou nootrópicos? (Não)",
+      "answer": ""
+    },
+    {
+      "title": "Como você classificaria seu nível atual de foco de 0 a 10",
+      "answer": ""
+    },
+    {
+      "title": "Com que frequência você sente \"nevoeiro mental\" ou esquecimento? (Sempre, Às vezes, Raramente, Nunca)",
+      "answer": ""
+    },
+    {
+      "title": "Sente que aprende mais devagar do que antes? (Sim, Não)",
+      "answer": ""
+    },
+    {
+      "title": "Tem histórico familiar de doenças neurodegenerativas? (Não)",
+      "answer": ""
+    },
+    {
+      "title": "Você consome alimentos ricos em ômega-3 e antioxidantes? (Sim, Não)",
+      "answer": ""
+    },
+    {
+      "title": "Como você classificaria seu nível atual de memória de 0 a 10",
+      "answer": ""
+    },
+    {
+      "title": "Em média, quantas horas você dorme por noite? (Menos de 5h, De 6h a 7h, De 7h a 8h, Acima de 9h)",
+      "answer": ""
+    },
+    {
+      "title": "Você acorda durante a noite? (Sim, Não)",
+      "answer": ""
+    },
+    {
+      "title": "Tem dificuldade para pegar no sono? (Sim, Não)",
+      "answer": ""
+    },
+    {
+      "title": "Você ronca? (Sim, Não)",
+      "answer": ""
+    },
+    {
+      "title": "Você já foi diagnosticado com algum distúrbio do sono? (Não)",
+      "answer": ""
+    },
+    {
+      "title": "Você acorda descansado ou já sente cansaço ao despertar? (Cansado, Descansado)",
+      "answer": ""
+    },
+    {
+      "title": "Costuma ter sonhos vívidos ao acordar? (Sim, Não)",
+      "answer": ""
+    },
+    {
+      "title": "Como você classificaria a qualidade atual de seu sono, de 0 a 10",
+      "answer": ""
+    },
+    {
+      "title": "Quais são suas principais fontes de estresse? (Não tenho)",
+      "answer": ""
+    },
+    {
+      "title": "Você costuma sentir irritabilidade ou ansiedade excessiva? (Sim, Não)",
+      "answer": ""
+    },
+    {
+      "title": "Já notou queda de cabelo, ganho/perda de peso ou problemas digestivos em períodos de estresse? (Sim, Não)",
+      "answer": ""
+    },
+    {
+      "title": "Como avalia sua capacidade de lidar com desafios e crises? (Boa, Média, Ruim)",
+      "answer": ""
+    },
+    {
+      "title": "Já teve sintomas como palpitações, tremores, sudorese excessiva ou falta de ar sem motivo aparente? (Não)",
+      "answer": ""
+    },
+    {
+      "title": "Como você classificaria seu nível atual de estresse de 0 a 10",
+      "answer": ""
+    },
+    {
+      "title": "Tem convivido com falta de lubrificação? (Não)",
+      "answer": ""
+    },
+    {
+      "title": "Tem convivido com dificuldade de ereção? (Não)",
+      "answer": ""
+    },
+    {
+      "title": "Como você classificaria seu nível atual de apetite sexual de 0 a 10",
+      "answer": ""
+    },
+    {
+      "title": "Você tem enfrentado problemas com queda de cabelo? (Sim, Não)",
+      "answer": ""
+    },
+    {
+      "title": "Como você classificaria a saúde atual do seu cabelo de 0 a 10",
+      "answer": ""
+    },
+    {
+      "title": "Suas unhas quebram facilmente ou têm manchas? (Sim, Não)",
+      "answer": ""
+    },
+    {
+      "title": "Como você classificaria a saúde atual de suas unhas de 0 a 10",
+      "answer": ""
+    },
+    {
+      "title": "Tem tido problemas com caspas? (Sim, Não)",
+      "answer": ""
+    },
+    {
+      "title": "Como descreveria seu tipo de pele? (Seca, Oleosa, Mista, Normal)",
+      "answer": ""
+    },
+    {
+      "title": "Quais são suas principais preocupações com a pele? (Acnes, Manchas, Envelhecimento, Pele seca, Pele oleosa)",
+      "answer": ""
+    },
+    {
+      "title": "Possui alguma doença relacionada a pele? (Psoríase, Rosácea, Dermatite)",
+      "answer": ""
+    },
+    {
+      "title": "Você se expõe ao sol diariamente? (Sempre, Às vezes, Raramente, Nunca)",
+      "answer": ""
+    },
+    {
+      "title": "Faz uso de protetor solar? (Sim, Não)",
+      "answer": ""
+    },
+    {
+      "title": "Como você classificaria a saúde atual da sua pele de 0 a 10",
+      "answer": ""
+    },
+    {
+      "title": "Agora, gostaríamos de saber mais sobre seus hábitos e estilo de vida atual. No seu cotidiano, fazem parte (Alimentação saudável, Prática de exercícios físicos, Compulsão por doces ou comida, Exposição frequente ao sol, Consumo de álcool, Tabagismo, Consumo de café)",
+      "answer": ""
+    },
+    {
+      "title": "Você frequentemente pratica grounding, pisando descalço diretamente em contato com a terra? (Sim, Não)",
+      "answer": ""
+    },
+    {
+      "title": "Com que frequência pratica atividades físicas na semana? (1 a 2 vezes, 3 a 4 vezes, 5 ou mais vezes, Nenhuma)",
+      "answer": ""
+    },
+    {
+      "title": "Em qual período costuma praticá las? (Manhã, Tarde, Noite, Não pratico)",
+      "answer": ""
+    },
+    {
+      "title": "Quais são os tipos de atividade que pratica? (Não pratico)",
+      "answer": ""
+    },
+    {
+      "title": "Qual o principal objetivo de suas práticas? (Saúde, Performance, Estética, Tratamento específico)",
+      "answer": ""
+    },
+    {
+      "title": "Já fez alguma cirurgia? (Não)",
+      "answer": ""
+    },
+    {
+      "title": "Já teve algum tipo de câncer? (Não)",
+      "answer": ""
+    },
+    {
+      "title": "Você possui alguma das seguintes condições? (Rinite alérgica, Enxaqueca, Colesterol e triglicérides elevados, Pressão alta, Pressão baixa, Dores articulares, Glicemia elevada, Anemia, Asma, Diabetes, Cirurgia bariátrica, Cirurgia recente (menos de 3 meses), Distúrbios gastrointestinais, Problemas renais, Problemas na vesícula, Problemas no fígado, Problemas na tireoide, Problemas cardíacos, Nenhum desses)",
+      "answer": ""
+    },
+    {
+      "title": "Sente dores ou possui algum tipo de lesão? (Não)",
+      "answer": ""
+    },
+    {
+      "title": "Já teve ou tem algum tipo de distúrbio alimentar? (Não)",
+      "answer": ""
+    },
+    {
+      "title": "Você tem alguma alergia medicamentosa? (Não)",
+      "answer": ""
+    },
+    {
+      "title": "Toma algum medicamento regularmente? (Se sim, quais?) (Não)",
+      "answer": ""
+    },
+    {
+      "title": "Você possui alguma outra condição crônica que necessite acompanhamento médico ou que seja importante relatar? (Não)",
+      "answer": ""
+    },
+    {
+      "title": "Nos últimos meses utilizou medicamentos para algum desses motivos? (Anticoagulantes, Antidepressivos, Outros medicamentos psiquiátricos ou neurológicos, Anti inflamatórios, Antibióticos, Medicamentos para colesterol, Medicamentos para diabetes, Medicamentos para emagrecimento, Medicamentos para a pele, Medicamentos para pressão alta, Medicamentos para saúde cardíaca, Protetores gástricos (prazois), Medicamentos para tireoide, Hormônios e anticoncepcionais, Outros)",
+      "answer": ""
+    },
+    {
+      "title": "Tem alguma contra indicação para suplementação com ferro? (Não)",
+      "answer": ""
+    },
+    {
+      "title": "Utiliza desodorante spray tradicional (com alumínio)? (Sim, Não)",
+      "answer": ""
+    },
+    {
+      "title": "Utiliza pastas de dente tradicionais (com flúor)? (Sim, Não)",
+      "answer": ""
+    },
+    {
+      "title": "Em sua alimentação, consome peixes com frequência? (mercúrio) (Sim, Não)",
+      "answer": ""
+    },
+    {
+      "title": "Quando foi a última vez em que realizou um protocolo de desparasitação contra vermes? (Nunca fiz, Há mais de 1 ano, Fiz recentemente)",
+      "answer": ""
+    },
+    {
+      "title": "Você tem ideia de qual é, aproximadamente, a sua pressão arterial hoje? (Não sei)",
+      "answer": ""
+    },
+    {
+      "title": "Você tem ideia de qual é, aproximadamente, o seu percentual de gordura atual? (Não sei)",
+      "answer": ""
+    },
+    {
+      "title": "Há mais alguma questão de saúde que gostaria de mencionar? (Não)",
+      "answer": ""
+    }
+  ],
+  "notes": [
+    {
+      "title": "Imunidade",
+      "note": 10
+    },
+    {
+      "title": "Intestino",
+      "note": 9
+    },
+    {
+      "title": "Energia",
+      "note": 6
+    },
+    {
+      "title": "Foco",
+      "note": 4
+    },
+    {
+      "title": "Memória",
+      "note": 10
+    },
+    {
+      "title": "Sono",
+      "note": 1
+    },
+    {
+      "title": "Stress",
+      "note": 7
+    },
+    {
+      "title": "Libido",
+      "note": 8
+    },
+    {
+      "title": "Cabelo",
+      "note": 5
+    },
+    {
+      "title": "Unha",
+      "note": 2
+    },
+    {
+      "title": "Pele",
+      "note": 6
+    }
+  ]
+}
