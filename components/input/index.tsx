@@ -7,7 +7,7 @@ interface InputProps extends ComponentProps<'input'> {
 const Input = React.forwardRef<HTMLInputElement, InputProps>(({ ...props }: InputProps, ref) => {
 	return (
 		<Card noChanfro input>
-			<input ref={ref} className='bg-black focus:outline-none' type='text' {...props} />
+			<input ref={ref} className='bg-black focus:outline-none min-w-[230px] sm:min-w-[350px]' type='text' {...props} />
 		</Card>
 	)
 })

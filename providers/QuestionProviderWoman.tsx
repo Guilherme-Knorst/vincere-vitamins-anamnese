@@ -9,7 +9,6 @@ import React, {
 	useEffect,
 	useState
 } from 'react'
-import { purista } from '../pages/_app'
 import { mascaraTelefone } from '../utils'
 
 export interface CheckBoxOption {
@@ -19,8 +18,8 @@ export interface CheckBoxOption {
 
 export interface IQuestion {
 	header?: ReactNode
-	isNotQuestion?: boolean
 	id: number
+	isNotQuestion?: boolean
 	text: string | ReactNode
 	buttonText?: string
 	hasDynamicText?: boolean
@@ -32,6 +31,9 @@ export interface IQuestion {
 	answer: string | undefined
 	formatter?: (phone: string) => string
 	maxLength?: number
+	isNote?: boolean
+	pdfText?: string
+
 	// noAnswer?: boolean
 	// conditionalToQuestion?: Array<number | string>
 	fillsProfileField?: keyof UserProfile
@@ -109,7 +111,7 @@ export const QuestionProviderWoman = ({ children }: PropsWithChildren) => {
 							</p>
 							<h1 className='pt-8'>Pronto para começar?</h1>
 						</>,
-			buttonOptions: ['Aceito'],
+			buttonOptions: ['Estou pronto'],
 			answer: '',
 		},
 		{
@@ -121,7 +123,7 @@ export const QuestionProviderWoman = ({ children }: PropsWithChildren) => {
 					<p className='pt-6'>(Fique tranquilo, todos os seus dados são confidenciais)</p>
 				</>
 			),
-			buttonOptions: ['Aceito'],
+			buttonOptions: ['Aceito os termos'],
 			answer: '',
 		},
 		{
@@ -207,7 +209,7 @@ export const QuestionProviderWoman = ({ children }: PropsWithChildren) => {
 		{
 			id: 11,
 			text: 'Para começarmos, gostaria de saber com que frequência contraiu gripes, resfriados ou outras infecções no último ano?',
-			buttonOptions: ['Raramente', '2 a 3 vezes', '4 ou mais vezes'],
+			buttonOptions: ['Nunca', 'Raramente', '2 a 3 vezes', '4 ou mais vezes'],
 			iconName: 'imunidade',
 			answer: ''
 		},
@@ -252,7 +254,8 @@ export const QuestionProviderWoman = ({ children }: PropsWithChildren) => {
 			buttonOptions: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
 			isSmallButton: true,
 			iconName: 'imunidade',
-			answer: ''
+			answer: '',
+			isNote: true
 		},
 		{
 			id: 17,
@@ -270,7 +273,7 @@ export const QuestionProviderWoman = ({ children }: PropsWithChildren) => {
 		},
 		{
 			id: 19,
-			text: 'Já teve episódios de refluxo ou azia?',
+			text: 'Tem convivido com episódios de refluxo ou azia?',
 			buttonOptions: ['Sim','Não'],
 			iconName: 'intestino',
 			answer: ''
@@ -289,12 +292,13 @@ export const QuestionProviderWoman = ({ children }: PropsWithChildren) => {
 			buttonOptions: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
 			isSmallButton: true,
 			iconName: 'intestino',
-			answer: ''
+			answer: '',
+			isNote: true
 		},
 		{
 			id: 22,
 			text: 'Você sente energia suficiente para realizar suas atividades diárias?',
-			buttonOptions: ['Sim', 'Às vezes', 'Raramente'],
+			buttonOptions: ['Sim', 'Às vezes', 'Raramente', 'Nunca'],
 			iconName: 'energia',
 			answer: ''
 		},
@@ -320,7 +324,7 @@ export const QuestionProviderWoman = ({ children }: PropsWithChildren) => {
 		},
 		{
 			id: 25,
-			text: 'Já teve diagnóstico ou suspeita de deficiência de ferro, Vitamina D, B12 ou hormônios como testosterona, tireoidianos ou cortisol?',
+			text: 'Já teve diagnóstico ou suspeita de deficiência de alguma vitamina ou mineral (ferro, Vitamina D, B12 e outros)',
 			buttonOptions: ['Não'],
 			inputPlaceholder: 'Sim, especifique...',
 			iconName: 'energia',
@@ -328,21 +332,30 @@ export const QuestionProviderWoman = ({ children }: PropsWithChildren) => {
 		},
 		{
 			id: 26,
-			text: 'Como você classificaria seu nível atual de energia de 0 a 10',
-			buttonOptions: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
-			isSmallButton: true,
+			text: 'Já teve diagnóstico ou suspeita de deficiência de algum hormônio?',
+			buttonOptions: ['Não'],
+			inputPlaceholder: 'Sim, especifique...',
 			iconName: 'energia',
 			answer: ''
 		},
 		{
 			id: 27,
+			text: 'Como você classificaria seu nível atual de energia de 0 a 10',
+			buttonOptions: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
+			isSmallButton: true,
+			iconName: 'energia',
+			answer: '',
+			isNote: true
+		},
+		{
+			id: 28,
 			text: 'Você costuma ter dificuldades em manter o foco em suas atividades?',
-			buttonOptions: ['Sempre', 'Às vezes', 'Raramente'],
+			buttonOptions: ['Sempre', 'Às vezes', 'Raramente', 'Nunca'],
 			iconName: 'foco',
 			answer: ''
 		},
 		{
-			id: 28,
+			id: 29,
 			text: 'Consome estimulantes como café, chá preto, pré-treinos ou nootrópicos?',
 			buttonOptions: ['Não'],
 			inputPlaceholder: 'Sim, especifique...',
@@ -350,29 +363,30 @@ export const QuestionProviderWoman = ({ children }: PropsWithChildren) => {
 			answer: ''
 		},
 		{
-			id: 29,
+			id: 30,
 			text: 'Como você classificaria seu nível atual de foco de 0 a 10',
 			buttonOptions: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
 			isSmallButton: true,
 			iconName: 'foco',
-			answer: ''
+			answer: '',
+			isNote: true
 		},
 		{
-			id: 30,
+			id: 31,
 			text: 'Com que frequência você sente "nevoeiro mental" ou esquecimento?',
-			buttonOptions: ['Sempre', 'Às vezes', 'Raramente'],
+			buttonOptions: ['Sempre', 'Às vezes', 'Raramente', 'Nunca'],
 			iconName: 'memoria',
 			answer: ''
 		},
 		{
-			id: 31,
+			id: 32,
 			text: 'Sente que aprende mais devagar do que antes?',
 			buttonOptions: ['Sim', 'Não'],
 			iconName: 'memoria',
 			answer: ''
 		},
 		{
-			id: 32,
+			id: 33,
 			text: 'Tem histórico familiar de doenças neurodegenerativas?',
 			buttonOptions: ['Não'],
 			inputPlaceholder: 'Sim, especifique...',
@@ -380,50 +394,51 @@ export const QuestionProviderWoman = ({ children }: PropsWithChildren) => {
 			answer: ''
 		},
 		{
-			id: 33,
+			id: 34,
 			text: 'Você consome alimentos ricos em ômega-3 e antioxidantes?',
 			buttonOptions: ['Sim', 'Não'],
 			iconName: 'memoria',
 			answer: ''
 		},
 		{
-			id: 34,
+			id: 35,
 			text: 'Como você classificaria seu nível atual de memória de 0 a 10',
 			buttonOptions: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
 			isSmallButton: true,
 			iconName: 'memoria',
-			answer: ''
+			answer: '',
+			isNote: true
 		},
 		{
-			id: 35,
+			id: 36,
 			text: 'Em média, quantas horas você dorme por noite?',
 			buttonOptions: ['Menos de 5h', 'De 6h a 7h', 'De 7h a 8h', 'Acima de 9h'],
 			iconName: 'sono',
 			answer: ''
 		},
 		{
-			id: 36,
+			id: 37,
 			text: 'Você acorda durante a noite?',
 			buttonOptions: ['Sim', 'Não'],
 			iconName: 'sono',
 			answer: ''
 		},
 		{
-			id: 37,
+			id: 38,
 			text: 'Tem dificuldade para pegar no sono?',
 			buttonOptions: ['Sim', 'Não'],
 			iconName: 'sono',
 			answer: ''
 		},
 		{
-			id: 38,
+			id: 39,
 			text: 'Você ronca?',
 			buttonOptions: ['Sim', 'Não'],
 			iconName: 'sono',
 			answer: ''
 		},
 		{
-			id: 39,
+			id: 40,
 			text: 'Você já foi diagnosticado com algum distúrbio do sono?',
 			buttonOptions: ['Não'],
 			inputPlaceholder: 'Sim, especifique...',
@@ -431,29 +446,30 @@ export const QuestionProviderWoman = ({ children }: PropsWithChildren) => {
 			answer: ''
 		},
 		{
-			id: 40,
+			id: 41,
 			text: 'Você acorda descansado ou já sente cansaço ao despertar?',
 			buttonOptions: ['Cansado', 'Descansado'],
 			iconName: 'sono',
 			answer: ''
 		},
 		{
-			id: 41,
+			id: 42,
 			text: 'Costuma ter sonhos vívidos ao acordar?',
 			buttonOptions: ['Sim', 'Não'],
 			iconName: 'sono',
 			answer: ''
 		},
 		{
-			id: 42,
+			id: 43,
 			text: 'Como você classificaria a qualidade atual de seu sono, de 0 a 10',
 			buttonOptions: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
 			isSmallButton: true,
 			iconName: 'sono',
-			answer: ''
+			answer: '',
+			isNote: true
 		},
 		{
-			id: 43,
+			id: 44,
 			text: 'Quais são suas principais fontes de estresse?',
 			buttonOptions: ['Não tenho'],
 			inputPlaceholder: 'Especifique...',
@@ -461,28 +477,28 @@ export const QuestionProviderWoman = ({ children }: PropsWithChildren) => {
 			answer: ''
 		},
 		{
-			id: 44,
+			id: 45,
 			text: 'Você costuma sentir irritabilidade ou ansiedade excessiva?',
 			buttonOptions: ['Sim', 'Não'],
 			iconName: 'stress',
 			answer: ''
 		},
 		{
-			id: 45,
+			id: 46,
 			text: 'Já notou queda de cabelo, ganho/perda de peso ou problemas digestivos em períodos de estresse?',
 			buttonOptions: ['Sim', 'Não'],
 			iconName: 'stress',
 			answer: ''
 		},
 		{
-			id: 46,
+			id: 47,
 			text: 'Como avalia sua capacidade de lidar com desafios e crises?',
 			buttonOptions: ['Boa', 'Média', 'Ruim'],
 			iconName: 'stress',
 			answer: ''
 		},
 		{
-			id: 47,
+			id: 48,
 			text: 'Já teve sintomas como palpitações, tremores, sudorese excessiva ou falta de ar sem motivo aparente?',
 			buttonOptions: ['Não'],
 			inputPlaceholder: 'Sim, especifique...',
@@ -490,15 +506,16 @@ export const QuestionProviderWoman = ({ children }: PropsWithChildren) => {
 			answer: ''
 		},
 		{
-			id: 48,
+			id: 49,
 			text: 'Como você classificaria seu nível atual de estresse de 0 a 10',
 			buttonOptions: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
 			isSmallButton: true,
 			iconName: 'stress',
-			answer: ''
+			answer: '',
+			isNote: true
 		},
 		{
-			id: 49,
+			id: 50,
 			text: 'Já utilizou algum método contraceptivo?',
 			buttonOptions: ['Não', 'Anticoncepcional', 'DIU Hormonal'],
 			inputPlaceholder: 'Outro, digite aqui...',
@@ -506,7 +523,7 @@ export const QuestionProviderWoman = ({ children }: PropsWithChildren) => {
 			answer: ''
 		},
 		{
-			id: 50,
+			id: 51,
 			text: 'Atualmente ainda utiliza algum método contraceptivo?',
 			buttonOptions: ['Não'],
 			inputPlaceholder: 'Sim, digite aqui...',
@@ -514,7 +531,7 @@ export const QuestionProviderWoman = ({ children }: PropsWithChildren) => {
 			answer: ''
 		},
 		{
-			id: 51,
+			id: 52,
 			text: 'Tem variações na libido ao longo do mês?',
 			buttonOptions: ['Não'],
 			inputPlaceholder: 'Sim, digite aqui...',
@@ -522,7 +539,7 @@ export const QuestionProviderWoman = ({ children }: PropsWithChildren) => {
 			answer: ''
 		},
 		{
-			id: 52,
+			id: 53,
 			text: 'Tem convivido com falta de lubrificação?',
 			buttonOptions: ['Não'],
 			inputPlaceholder: 'Sim, digite aqui...',
@@ -530,59 +547,62 @@ export const QuestionProviderWoman = ({ children }: PropsWithChildren) => {
 			answer: ''
 		},
 		{
-			id: 53,
+			id: 54,
 			text: 'Como você classificaria seu nível atual de apetite sexual de 0 a 10',
 			buttonOptions: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
 			isSmallButton: true,
 			iconName: 'libido',
-			answer: ''
-		},
-		{
-			id: 54,
-			text: 'Você tem enfrentado problemas com queda de cabelo?',
-			buttonOptions: ['Sim', 'Não'],
-			iconName: 'cabelo-unha',
-			answer: ''
+			answer: '',
+			isNote: true
 		},
 		{
 			id: 55,
-			text: 'Como você classificaria a saúde atual do seu cabelo de 0 a 10',
-			buttonOptions: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
-			isSmallButton: true,
-			iconName: 'cabelo-unha',
+			text: 'Você tem enfrentado problemas com queda de cabelo?',
+			buttonOptions: ['Sim', 'Não'],
+			iconName: 'cabelo',
 			answer: ''
 		},
 		{
 			id: 56,
-			text: 'Suas unhas quebram facilmente ou têm manchas?',
-			buttonOptions: ['Sim', 'Não'],
-			iconName: 'cabelo-unha',
-			answer: ''
+			text: 'Como você classificaria a saúde atual do seu cabelo de 0 a 10',
+			buttonOptions: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
+			isSmallButton: true,
+			iconName: 'cabelo',
+			answer: '',
+			isNote: true
 		},
 		{
 			id: 57,
-			text: 'Como você classificaria a saúde atual de suas unhas de 0 a 10',
-			buttonOptions: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
-			isSmallButton: true,
-			iconName: 'cabelo-unha',
+			text: 'Suas unhas quebram facilmente ou têm manchas?',
+			buttonOptions: ['Sim', 'Não'],
+			iconName: 'unha',
 			answer: ''
 		},
 		{
 			id: 58,
+			text: 'Como você classificaria a saúde atual de suas unhas de 0 a 10',
+			buttonOptions: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
+			isSmallButton: true,
+			iconName: 'unha',
+			answer: '',
+			isNote: true
+		},
+		{
+			id: 59,
 			text: 'Tem tido problemas com caspas?',
 			buttonOptions: ['Sim', 'Não'],
 			iconName: 'pele',
 			answer: ''
 		},
 		{
-			id: 59,
+			id: 60,
 			text: 'Como descreveria seu tipo de pele?',
 			buttonOptions: ['Seca', 'Oleosa', 'Mista', 'Normal'],
 			iconName: 'pele',
 			answer: ''
 		},
 		{
-			id: 60,
+			id: 61,
 			text: 'Quais são suas principais preocupações com a pele?',
 			options: [
 				{ name: 'Acnes', isChecked: false },
@@ -597,7 +617,7 @@ export const QuestionProviderWoman = ({ children }: PropsWithChildren) => {
 			answer: ''
 		},
 		{
-			id: 61,
+			id: 62,
 			text: 'Possui alguma doença relacionada a pele?',
 			options: [
 				{ name: 'Psoríase', isChecked: false },
@@ -609,29 +629,30 @@ export const QuestionProviderWoman = ({ children }: PropsWithChildren) => {
 			answer: ''
 		},
 		{
-			id: 62,
+			id: 63,
 			text: 'Você se expõe ao sol diariamente?',
-			buttonOptions: ['Sempre', 'Às vezes', 'Raramente'],
+			buttonOptions: ['Sempre', 'Às vezes', 'Raramente', 'Nunca'],
 			iconName: 'pele',
 			answer: ''
 		},
 		{
-			id: 63,
+			id: 64,
 			text: 'Faz uso de protetor solar?',
 			buttonOptions: ['Sim', 'Não'],
 			iconName: 'pele',
 			answer: ''
 		},
 		{
-			id: 64,
+			id: 65,
 			text: 'Como você classificaria a saúde atual da sua pele de 0 a 10',
 			buttonOptions: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
 			isSmallButton: true,
 			iconName: 'pele',
-			answer: ''
+			answer: '',
+			isNote: true
 		},
 		{
-			id: 65,
+			id: 66,
 			text: (
 				<>
 					<p>Ótimo, até aqui tudo está claro e anotado</p>
@@ -654,19 +675,19 @@ export const QuestionProviderWoman = ({ children }: PropsWithChildren) => {
 			answer: ''
 		},
 		{
-			id: 66,
+			id: 67,
 			text: 'Você frequentemente pratica grounding, pisando descalço diretamente em contato com a terra?',
 			buttonOptions: ['Sim', 'Não'],
 			answer: ''
 		},
 		{
-			id: 67,
+			id: 68,
 			text: 'Com que frequência pratica atividades físicas na semana?',
 			buttonOptions: ['1 a 2 vezes', '3 a 4 vezes', '5 ou mais vezes', 'Nenhuma'],
 			answer: ''
 		},
 		{
-			id: 68,
+			id: 69,
 			text: 'Em qual período costuma praticá las?',
 			options: [
 				{ name: 'Manhã', isChecked: false },
@@ -677,14 +698,14 @@ export const QuestionProviderWoman = ({ children }: PropsWithChildren) => {
 			answer: ''
 		},
 		{
-			id: 69,
+			id: 70,
 			text: 'Quais são os tipos de atividade que pratica?',
 			buttonOptions: ['Não pratico'],
 			inputPlaceholder: 'Por favor, digite aqui...',
 			answer: ''
 		},
 		{
-			id: 70,
+			id: 71,
 			text: 'Qual o principal objetivo de suas práticas?',
 			options: [
 				{ name: 'Saúde', isChecked: false },
@@ -695,21 +716,21 @@ export const QuestionProviderWoman = ({ children }: PropsWithChildren) => {
 			answer: ''
 		},
 		{
-			id: 71,
+			id: 72,
 			text: 'Já fez alguma cirurgia?',
 			buttonOptions: ['Não'],
 			inputPlaceholder: 'Sim, especifique...',
 			answer: ''
 		},
 		{
-			id: 72,
+			id: 73,
 			text: 'Já teve algum tipo de câncer?',
 			buttonOptions: ['Não'],
 			inputPlaceholder: 'Sim, especifique...',
 			answer: ''
 		},
 		{
-			id: 73,
+			id: 74,
 			text: 'Você possui alguma das seguintes condições?',
 			options: [
 				{ name: 'Rinite alérgica', isChecked: false },
@@ -735,42 +756,42 @@ export const QuestionProviderWoman = ({ children }: PropsWithChildren) => {
 			answer: ''
 		},
 		{
-			id: 74,
+			id: 75,
 			text: 'Sente dores ou possui algum tipo de lesão?',
 			buttonOptions: ['Não'],
 			inputPlaceholder: 'Sim, especifique...',
 			answer: ''
 		},
 		{
-			id: 75,
+			id: 76,
 			text: 'Já teve ou tem algum tipo de distúrbio alimentar?',
 			buttonOptions: ['Não'],
 			inputPlaceholder: 'Sim, especifique...',
 			answer: ''
 		},
 		{
-			id: 76,
+			id: 77,
 			text: 'Você tem alguma alergia medicamentosa?',
 			buttonOptions: ['Não'],
 			inputPlaceholder: 'Sim, especifique...',
 			answer: ''
 		},
 		{
-			id: 77,
+			id: 78,
 			text: 'Toma algum medicamento regularmente? (Se sim, quais?)',
 			buttonOptions: ['Não'],
 			inputPlaceholder: 'Sim, especifique...',
 			answer: ''
 		},
 		{
-			id: 78,
+			id: 79,
 			text: 'Você possui alguma outra condição crônica que necessite acompanhamento médico ou que seja importante relatar?',
 			buttonOptions: ['Não'],
 			inputPlaceholder: 'Sim, especifique...',
 			answer: ''
 		},
 		{
-			id: 79,
+			id: 80,
 			text: 'Nos últimos meses utilizou medicamentos para algum desses motivos?',
 			options: [
 				{ name: 'Anticoagulantes', isChecked: false },
@@ -794,52 +815,52 @@ export const QuestionProviderWoman = ({ children }: PropsWithChildren) => {
 			answer: ''
 		},
 		{
-			id: 80,
+			id: 81,
 			text: 'Tem alguma contra indicação para suplementação com ferro?',
 			buttonOptions: ['Não'],
 			inputPlaceholder: 'Sim, especifique...',
 			answer: ''
 		},
 		{
-			id: 81,
+			id: 82,
 			text: 'Utiliza desodorante spray tradicional (com alumínio)?',
 			buttonOptions: ['Sim', 'Não'],
 			answer: ''
 		},
 		{
-			id: 82,
+			id: 83,
 			text: 'Utiliza pastas de dente tradicionais (com flúor)?',
 			buttonOptions: ['Sim', 'Não'],
 			answer: ''
 		},
 		{
-			id: 83,
+			id: 84,
 			text: 'Em sua alimentação, consome peixes com frequência? (mercúrio)',
 			buttonOptions: ['Sim', 'Não'],
 			answer: ''
 		},
 		{
-			id: 84,
+			id: 85,
 			text: 'Quando foi a última vez em que realizou um protocolo de desparasitação contra vermes?',
 			buttonOptions: ['Nunca fiz', 'Há mais de 1 ano', 'Fiz recentemente'],
 			answer: ''
 		},
 		{
-			id: 85,
+			id: 86,
 			text: 'Você tem ideia de qual é, aproximadamente, a sua pressão arterial hoje?',
 			buttonOptions: ['Não sei'],
 			inputPlaceholder: 'Digite aqui...',
 			answer: ''
 		},
 		{
-			id: 86,
+			id: 87,
 			text: 'Você tem ideia de qual é, aproximadamente, o seu percentual de gordura atual?',
 			buttonOptions: ['Não sei'],
 			inputPlaceholder: 'Digite aqui...',
 			answer: ''
 		},
 		{
-			id: 87,
+			id: 88,
 			text: 'Há mais alguma questão de saúde que gostaria de mencionar',
 			buttonOptions: ['Não'],
 			inputPlaceholder: 'Sim, especifique...',
@@ -847,7 +868,7 @@ export const QuestionProviderWoman = ({ children }: PropsWithChildren) => {
 		},
 		{
 			isNotQuestion: true,
-			id: 88,
+			id: 89,
 			text: (
 				<>
 					<p>Muito bem, finalizamos essa primeira etapa</p>

@@ -122,21 +122,21 @@ Question.Container = ({
 			goNext()
 			return
 		}
-		if (question?.id == 88) {
+		if (question?.id == 89) {
 			setFade(true)
 			setTimeout(() => {
 				router.push(
-					{ pathname: '/result', query: { genre: 'w', gringe: 65 } },
+					{ pathname: '/result', query: { genre: 'w', gringe: 66 } },
 					'/result'
 				)
 			}, 400)
 			return
 		}
 
-		if (question?.id == 1 && isTermsAccepted === false) {
-			openTermsModal()
-			return
-		}
+		// if (question?.id == 1 && isTermsAccepted === false) {
+		// 	openTermsModal()
+		// 	return
+		// }
 
 		setFade(true)
 
@@ -176,7 +176,7 @@ Question.Container = ({
 					) : null
 				} */}
 
-				<Card>{props.children}</Card>
+				<Card>{props.children} {question?.id === 1 && <a className='underline text-primary hover:text-secondary visited:text-purple-600 pt-6' onClick={openTermsModal}>Clique aqui para visualizar</a>}</Card>
 
 				{question?.options && (
 					<div className='flex flex-col items-center gap-10'>
@@ -197,6 +197,7 @@ Question.Container = ({
 									placeholder={question.inputPlaceholder}
 									autoFocus
 									ref={inputRef}
+									maxLength={question.maxLength ?? 150}
 								/>
 								<Button onClick={handleAnswer} disabled={!canGoNext}>
 									{buttonText}
@@ -223,6 +224,7 @@ Question.Container = ({
 							onChange={(e) => setAnswer(e.target.value)}
 							placeholder={question.inputPlaceholder}
 							ref={inputRef}
+							maxLength={question.maxLength ?? 150}
 						/>
 						<Button onClick={handleAnswer} disabled={!canGoNext}>
 							{buttonText}
@@ -239,7 +241,7 @@ Question.Container = ({
 			<TermsModal
 				isOpen={isModalOpen}
 				onAccept={acceptTerms}
-				onClose={() => router.push('/')}
+				onClose={() => setIsModalOpen(false)}
 			/>
 		</>
 	)

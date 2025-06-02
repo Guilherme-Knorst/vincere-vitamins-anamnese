@@ -23,7 +23,7 @@ function Question() {
 	const currentQuestionId = parseInt(number as string)
 	const { questions } = useQuestions()
 	const currentQuestion = questions[currentQuestionId]
-	const notesQuestions = [16,21,26,29,34,42,48,51,53,55,62]
+	const notesQuestions = [16,21,27,30,35,43,49,52,54,56,63]
 
 	useEffect(() => {
 		router.beforePopState(({ as }) => {
@@ -109,8 +109,8 @@ Question.Container = ({
 	}
 
 	const acceptTerms = () => {
-		setFade(true)
 		setIsModalOpen(false)
+		setFade(true)
 		setIsTermsAccepted(true)
 		setTimeout(() => {
 			goNext()
@@ -123,12 +123,11 @@ Question.Container = ({
 			goNext()
 			return
 		}
-		if (question?.id == 9) {
-			//86
+		if (question?.id == 3) {
 			setFade(true)
 			setTimeout(() => {
 				router.push(
-					{ pathname: '/result', query: { genre: 'm', gringe: 63 } },
+					{ pathname: '/result', query: { genre: 'm', gringe: 64 } },
 					'/result'
 				)
 			}, 400)
@@ -199,6 +198,7 @@ Question.Container = ({
 									placeholder={question.inputPlaceholder}
 									autoFocus
 									ref={inputRef}
+									maxLength={question.maxLength ?? 150}
 								/>
 								<Button onClick={handleAnswer} disabled={!canGoNext}>
 									{buttonText}
@@ -225,7 +225,7 @@ Question.Container = ({
 							onChange={(e) => setAnswer(e.target.value)}
 							placeholder={question.inputPlaceholder}
 							ref={inputRef}
-							maxLength={question.maxLength ?? 60}
+							maxLength={question.maxLength ?? 150}
 						/>
 						<Button onClick={handleAnswer} disabled={!canGoNext}>
 							{buttonText}
