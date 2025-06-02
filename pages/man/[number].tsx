@@ -192,6 +192,15 @@ Question.Container = ({
 						)}
 						{question.inputPlaceholder && (
 							<div className='flex flex-col gap-10'>
+								{question?.buttonOptions && (
+									<div className='flex flex-wrap justify-center gap-6 pt-5'>
+										{question.buttonOptions.map((o) => (
+											<Button key={o} onClick={handleAnswer} small={question.isSmallButton}>
+												{o}
+											</Button>
+										))}
+									</div>
+								)}
 								<Input
 									value={formattedAnswer}
 									onChange={(e) => setAnswer(e.target.value)}
@@ -208,7 +217,7 @@ Question.Container = ({
 					</div>
 				)}
 
-				{question?.buttonOptions && (
+				{question?.buttonOptions && !question?.options && (
 					<div className='flex flex-wrap justify-center gap-6 pt-5'>
 						{question.buttonOptions.map((o) => (
 							<Button key={o} onClick={handleAnswer} small={question.isSmallButton}>

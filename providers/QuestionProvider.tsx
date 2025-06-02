@@ -278,7 +278,7 @@ export const QuestionProvider = ({ children }: PropsWithChildren) => {
 		},
 		{
 			id: 19,
-			text: 'Tem convivido com episódios de refluxo ou azia?',
+			text: 'Você tem episódios de refluxo ou azia?',
 			buttonOptions: ['Sim','Não'],
 			iconName: 'intestino',
 			answer: ''
@@ -613,6 +613,7 @@ export const QuestionProvider = ({ children }: PropsWithChildren) => {
 				{ name: 'Rosácea', isChecked: false },
 				{ name: 'Dermatite', isChecked: false }
 			],
+			buttonOptions: ['Não'],
 			inputPlaceholder: 'Outras, digite aqui...',
 			iconName: 'pele',
 			answer: ''
@@ -799,8 +800,8 @@ export const QuestionProvider = ({ children }: PropsWithChildren) => {
 				{ name: 'Medicamentos para tireoide', isChecked: false },
 				{ name: 'Hormônios e anticoncepcionais', isChecked: false },
 				{ name: 'Outros', isChecked: false }
-				
 			],
+			buttonOptions: ['Não'],
 			inputPlaceholder: 'Se escolheu algum, especifique...',
 			answer: ''
 		},
@@ -851,6 +852,19 @@ export const QuestionProvider = ({ children }: PropsWithChildren) => {
 		},
 		{
 			id: 86,
+			text: 'Quais são os horários aproximados das principais atividades do seu dia? (Acordar, trabalhar, comer, treinar, dormir, etc.)',
+			inputPlaceholder: 'Descreva...',
+			answer: ''
+		},
+		{
+			id: 87,
+			text: 'Você sente algum desconforto, dor ou possui alguma lesão em alguma região específica do corpo?',
+			buttonOptions: ['Não'],
+			inputPlaceholder: 'Sim, qual...',
+			answer: ''
+		},
+		{
+			id: 88,
 			text: 'Há mais alguma questão de saúde que gostaria de mencionar?',
 			buttonOptions: ['Não'],
 			inputPlaceholder: 'Sim, especifique...',
@@ -858,7 +872,7 @@ export const QuestionProvider = ({ children }: PropsWithChildren) => {
 		},
 		{
 			isNotQuestion: true,
-			id: 87,
+			id: 89,
 			text: (
 				<>
 					<p>Muito bem, finalizamos essa primeira etapa...</p>
