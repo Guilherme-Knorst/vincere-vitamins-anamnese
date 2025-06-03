@@ -123,7 +123,7 @@ Question.Container = ({
 			goNext()
 			return
 		}
-		if (question?.id == 3) {
+		if (question?.id == 89) {
 			setFade(true)
 			setTimeout(() => {
 				router.push(

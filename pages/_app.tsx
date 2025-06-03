@@ -6,6 +6,7 @@ import RootLayout from '../components/layout'
 import { QuestionProvider } from '../providers/QuestionProvider'
 import { QuestionProviderWoman } from '../providers/QuestionProviderWoman'
 import { TermsModalProvider } from '../providers/ModalProvider'
+import Head from 'next/head';
 
 export const purista = localFont({
 	src: [
@@ -36,14 +37,19 @@ export const digital = localFont({
 
 export default function MyApp({ Component, pageProps }: AppProps) {
 	return (
-		<RootLayout>
-			<TermsModalProvider>
-				<QuestionProvider>
-					<QuestionProviderWoman>
-						<Component {...pageProps} />
-					</QuestionProviderWoman>
-				</QuestionProvider>
-			</TermsModalProvider>
-		</RootLayout>
+		<>
+			<Head>
+				<link rel="icon" href="/fav.svg" />
+			</Head>
+			<RootLayout>
+				<TermsModalProvider>
+					<QuestionProvider>
+						<QuestionProviderWoman>
+							<Component {...pageProps} />
+						</QuestionProviderWoman>
+					</QuestionProvider>
+				</TermsModalProvider>
+			</RootLayout>
+		</>
 	)
 }

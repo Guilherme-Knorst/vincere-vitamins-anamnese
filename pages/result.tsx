@@ -61,13 +61,13 @@ export default function Result() {
 				 	 answer: options ? options.filter(o => o.isChecked).map(o => o.name).join(", ") : answer }))
 
 
-		const formattedPhone = formatarTelefoneParaEnvio(profile?.phone as string ?? "(51) 99583-1736")
+		const formattedPhone = formatarTelefoneParaEnvio(profile?.phone as string ?? "(51) 98020-0788")
 
 		const name = profile?.name ?? "Nome de Teste"
 
 		//// TWILIO
 
-		console.log("Enviando %s - %d", profile?.name ?? "Nome de Teste", formatarTelefoneParaEnvio(profile?.phone as string ?? "(51) 99583-1736"))
+		console.log("Enviando %s - %d", profile?.name ?? "Nome de Teste", formatarTelefoneParaEnvio(profile?.phone as string ?? "(51) 98020-0788"))
 		try {
       const response = await fetch('https://anamnese-1632.twil.io', {
         method: 'POST',
@@ -124,10 +124,10 @@ export default function Result() {
 				</p>
 				{/* <p className='pt-6'>Fique atento e preparado!</p> */}
 				<p className='pt-6'>(Caso não receba, entre em contato conosco pelo WhatsApp disponível em nosso site).</p>
-				<div className='pt-6'>{pdfUrl == "k" ? 
+				<div className='pt-6'>{pdfUrl == "" ? 
 					<div className='flex gap-6'><div className='w-10 h-10 border-4 border-gray-300 border-t-yellow-400 rounded-full animate-spin'/>Gerando pdf...</div> 
 					: 
-					<a className='underline text-primary hover:text-secondary visited:text-purple-600 pt-6' href={getWhatsappURL()}>Clique aqui para baixar seu pdf</a>}</div>
+					<a className='underline text-primary hover:text-secondary visited:text-purple-600 pt-6' onClick={() => getPdf()}>Clique aqui para baixar seu pdf</a>}</div>
 
 			</Card>
 			<div className='flex flex-wrap justify-center gap-6 pt-5'>
