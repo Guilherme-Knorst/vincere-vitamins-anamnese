@@ -127,7 +127,7 @@ export default function Result() {
 				<div className='pt-6'>{pdfUrl == "" ? 
 					<div className='flex gap-6'><div className='w-10 h-10 border-4 border-gray-300 border-t-yellow-400 rounded-full animate-spin'/>Gerando pdf...</div> 
 					: 
-					<a className='underline text-primary hover:text-secondary visited:text-purple-600 pt-6' onClick={() => getPdf()}>Clique aqui para baixar seu pdf</a>}</div>
+					<a className='underline text-primary hover:text-secondary visited:text-purple-600 mt-6 p-1 cursor-pointer' onClick={() => getPdf()}>Clique aqui para baixar seu pdf</a>}</div>
 
 			</Card>
 			<div className='flex flex-wrap justify-center gap-6 pt-5'>

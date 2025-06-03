@@ -74,7 +74,7 @@ async function main() {
 	const spacing         = 5;   // gap entre barras
 	const barHeight       = 16;
 	const labelBarSpacing = 10;
-	const barPercentSpacing = 10;
+	const barPercentSpacing = 20;
 	const barWidth        = 160;
 
 	// medida de texto para labels
@@ -199,8 +199,9 @@ async function main() {
 			.fillColor('#FFFFFF')
 			.text(
 				String(item.note),
-				barsX + padding + maxLabelWidth + labelBarSpacing + barWidth + barPercentSpacing,
-				y
+				barsX + barWidth + barPercentSpacing,
+				y + 4, 
+				{ width: 100, align: 'right' }
 			);
 
 		y += barHeight + spacing;
