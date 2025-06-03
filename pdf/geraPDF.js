@@ -13,7 +13,7 @@ async function main() {
 	// Cria o documento PDF com pdfkit
 	const doc = new PDFDocument({
 		size: [1079.999, 540],
-		margins: { top: 5, bottom: 5, left: 120, right: 120 }
+		margins: { top: 50, bottom: 50, left: 120, right: 120 }
 	});
 
 	// Define o caminho da imagem de fundo
@@ -247,11 +247,15 @@ async function main() {
 	});
 	
 	// ---- Quarta página (Início do relatório) ----
-	// doc.addPage();
+	doc.addPage();
 
-	// Auxiliares: chanfro com gradiente e fundo preto
+		// ----------------------------------------------
+	// 1) Funções auxiliares (sem alterações)
+	// ----------------------------------------------
+
+	// Desenha um container chanfrado (TR & BL) com borda em degradê e interior preto
 	function drawGradientChamferContainer(doc, x, y, w, h, c, grad, padding) {
-		// 1) contorno chanfrado TR & BL com gradiente
+		// 1.1) contorno chanfrado TR & BL com gradiente
 		doc.save()
 			.fill(grad)
 			.moveTo(x, y)
@@ -264,7 +268,7 @@ async function main() {
 			.fill()
 			.restore();
 
-		// 2) interior preto com mesmos chanfros
+		// 1.2) interior preto com mesmos chanfros
 		const ix = x + padding,
 					iy = y + padding,
 					iw = w - 2 * padding,
@@ -282,7 +286,7 @@ async function main() {
 			.restore();
 	}
 
-	// Gradiente dourado horizontal
+	// Cria um degradê dourado horizontal
 	function makeGoldGradient(doc, x0, y0, x1, y1) {
 		return doc.linearGradient(x0, y0, x1, y1)
 			.stop(0,   [241, 200,  84])
@@ -290,142 +294,151 @@ async function main() {
 			.stop(1,   [183, 144, 109]);
 	}
 
-	// Parâmetros configuráveis de padding
-	const chamferSize         = 28;   // tamanho do chanfrado
+	// ----------------------------------------------
+	// 2) Parâmetros configuráveis de layout
+	// ----------------------------------------------
+
+	const chamferSize         = 18;   // tamanho do chanfrado
 	const chamferBorderPad    = 1;    // padding interno entre borda chanfrada e box preto
 	const textPadX            = 20;   // padding horizontal do texto dentro do box preto
 	const textPadY            = 20;   // padding vertical do texto dentro do box preto
-	const textSpacing         = 1;   // espaço entre pergunta e resposta
-	const blockSpacing        = 25;
+	const textSpacing         = 1;    // espaço entre pergunta e resposta dentro do container
+	const blockSpacing        = 25;   // espaço entre containers sucessivos
 
-	// 2) Área útil considerando margens
+	// Considera margens do documento
 	const { top, bottom, left, right } = doc.page.margins;
 	const availW = doc.page.width  - left - right;
 	const availH = doc.page.height - top  - bottom;
 
-	// 2) Perguntas de índice 1 a 7 num único container
-	const groupItems = anamnese.slice(0, 7);
-
-	// 2.1) Mede alturas de cada bloco Q+A (ajustando largura interna)
 	doc.font('Helvetica').fontSize(20);
-	const innerW = availW - 2 * chamferBorderPad - 2 * textPadX;
-	const blocks = groupItems.map(item => {
-		const qH = doc.heightOfString(item.title,  { width: innerW, align: 'center' });
-		const aH = doc.heightOfString(item.answer,{ width: innerW, align: 'center' });
-		return { title: item.title, answer: item.answer, qH, aH };
-	});
 
-	// 2.2) Soma total de alturas + espaçamentos
-	const totalTextH = blocks.reduce((sum, b) => sum + b.qH + b.aH, 0)
-									+ textSpacing * (blocks.length - 1) + blockSpacing * (blocks.length - 1);
+	//////////////////////////////////////////////
+	// 3) Loop principal: Q+A 0–6 em containers  //
+	//     que preenchem páginas; Q+A ≥7 em      //
+	//     container centralizado por página    //
+	//////////////////////////////////////////////
 
-	// 2.3) Calcula dimensões do container
-	const boxW = innerW + 2 * textPadX + 2 * chamferBorderPad;
-	const boxH = totalTextH + 2 * textPadY + 2 * chamferBorderPad;
-
-	// 2.4) Centraliza o container numa nova página
-	doc.addPage();
-	const boxX = left + (availW - boxW) / 2;
-	const boxY = top  + (availH - boxH) / 2;
-
-	// 2.5) Desenha o container chanfrado com gradiente
-	const boxGrad = makeGoldGradient(doc, boxX, boxY, boxX + boxW, boxY);
-	drawGradientChamferContainer(
-		doc, boxX, boxY, boxW, boxH,
-		chamferSize, boxGrad, chamferBorderPad
-	);
-
-	// 2.6) Desenha cada pergunta+resposta dentro do container
-	let cursorY = boxY + chamferBorderPad + textPadY;
-	blocks.forEach(({ title, answer, qH, aH }, idx) => {
-		// pergunta
-		doc.fillColor('white')
-			.text(
-				title,
-				boxX + chamferBorderPad + textPadX,
-				cursorY,
-				{ width: innerW, align: 'center' }
-			);
-
-		// resposta
-		doc.fillColor([252,189,0])
-			.text(
-				answer,
-				boxX + chamferBorderPad + textPadX,
-				cursorY + qH + textSpacing,
-				{ width: innerW, align: 'center' }
-			);
-
-		// avança cursor para próximo bloco
-		cursorY += qH + aH + blockSpacing;
-	});
+	let cursorY = top; // posição Y inicial na primeira página
 
 	anamnese.forEach((item, i) => {
-		if ( i >= 7) {
-			// 1) Nova página
-			doc.addPage();
+		if (i < 7) {
+			// 3.a) Pergunta índice 0 a 6: cada uma num container próprio que avança verticalmente
 
+			// Mede altura da pergunta
+			const qH = doc.heightOfString(item.title, {
+				width: availW - 2 * chamferBorderPad - 2 * textPadX,
+				align: 'center'
+			});
 
-			// 3) Mede altura dos textos com padding horizontal
-			doc.font('Helvetica').fontSize(25);
-			const innerW = availW 
-									- 2 * chamferBorderPad      // espaço para o container interno preto
-									- 2 * textPadX;             // padding horizontal do texto
-			const qH = doc.heightOfString(item.title,  { width: innerW, align: 'center' });
-			const aH = doc.heightOfString(item.answer,{ width: innerW, align: 'center' });
+			// Mede altura da resposta
+			const aH = doc.heightOfString(item.answer, {
+				width: availW - 2 * chamferBorderPad - 2 * textPadX,
+				align: 'center'
+			});
+
+			// Altura total do texto dentro do container
 			const totalTextH = qH + textSpacing + aH;
 
-			// 4) Dimensões do container chanfrado + box preto
-			const boxW = innerW 
-								+ 2 * textPadX 
-								+ 2 * chamferBorderPad;
-			const boxH = totalTextH 
-								+ 2 * textPadY 
-								+ 2 * chamferBorderPad;
+			// Dimensões do container
+			const boxW = (availW - 2 * chamferBorderPad);
+			const boxH = totalTextH + 2 * textPadY + 2 * chamferBorderPad;
 
-			// 5) Centraliza container na página
+			// Se não cabe no espaço restante, cria nova página
+			if (cursorY + boxH > top + availH) {
+				doc.addPage();
+				cursorY = top;
+			}
+
+			// Centraliza container horizontalmente
 			const boxX = left + (availW - boxW) / 2;
-			const boxY = top  + (availH - boxH) / 2;
+			const boxY = cursorY;
 
-			// 6) Gradiente dourado horizontal
+			// Gradiente dourado horizontal
 			const boxGrad = makeGoldGradient(doc, boxX, boxY, boxX + boxW, boxY);
 
-			// 7) Desenha container chanfrado e interior preto
+			// Desenha container chanfrado + interior preto
 			drawGradientChamferContainer(
 				doc,
 				boxX, boxY, boxW, boxH,
-				chamferSize, boxGrad,
-				chamferBorderPad
+				chamferSize, boxGrad, chamferBorderPad
 			);
 
-			// 8) Calcula Y inicial do texto dentro do box preto
-			const contentY0 = boxY 
-											+ chamferBorderPad 
-											+ textPadY
-											+ ( (boxH 
-												- 2*chamferBorderPad 
-												- 2*textPadY
-												) - totalTextH ) / 2;
+			// Calcula Y inicial do texto dentro do container
+			const textStartY = boxY + chamferBorderPad + textPadY
+											+ ((boxH - 2 * chamferBorderPad - 2 * textPadY) - totalTextH) / 2;
 
-			// 9) Desenha pergunta centralizada
+			// Desenha pergunta (branca)
 			doc.fillColor('white')
 				.text(
 					item.title,
 					boxX + chamferBorderPad + textPadX,
-					contentY0,
-					{ width: innerW, align: 'center' }
+					textStartY,
+					{ width: boxW - 2 * chamferBorderPad - 2 * textPadX, align: 'center' }
 				);
 
-			// 10) Desenha resposta logo abaixo
+			// Desenha resposta (amarela)
 			doc.fillColor([252,189,0])
 				.text(
 					item.answer,
 					boxX + chamferBorderPad + textPadX,
-					contentY0 + qH + textSpacing,
+					textStartY + qH + textSpacing,
+					{ width: boxW - 2 * chamferBorderPad - 2 * textPadX, align: 'center' }
+				);
+
+			// Avança cursorY para o próximo container
+			cursorY += boxH + blockSpacing;
+
+		} else {
+			// 3.b) Para i ≥ 7: cada Q+A num container centralizado verticalmente e horizontalmente em sua própria página
+			// Cria nova página
+			doc.addPage();
+
+			// Mede alturas com largura interna (full availW menos padding)
+			doc.font('Helvetica').fontSize(20);
+			const innerW = availW - 2 * chamferBorderPad - 2 * textPadX;
+			const qH = doc.heightOfString(item.title,  { width: innerW, align: 'center' });
+			const aH = doc.heightOfString(item.answer,{ width: innerW, align: 'center' });
+			const totalTextH = qH + textSpacing + aH;
+
+			// Dimensões do container
+			const boxW = innerW + 2 * textPadX + 2 * chamferBorderPad;
+			const boxH = totalTextH + 2 * textPadY + 2 * chamferBorderPad;
+
+			// Centraliza container na página
+			const boxX = left + (availW - boxW) / 2;
+			const boxY = top  + (availH - boxH) / 2;
+
+			// Gradiente dourado horizontal
+			const boxGrad = makeGoldGradient(doc, boxX, boxY, boxX + boxW, boxY);
+
+			// Desenha container chanfrado + interior preto
+			drawGradientChamferContainer(
+				doc,
+				boxX, boxY, boxW, boxH,
+				chamferSize, boxGrad, chamferBorderPad
+			);
+
+			// Calcula Y inicial do texto dentro do container
+			const textStartY = boxY + chamferBorderPad + textPadY
+											+ ((boxH - 2 * chamferBorderPad - 2 * textPadY) - totalTextH) / 2;
+
+			// Desenha pergunta (branca)
+			doc.fillColor('white')
+				.text(
+					item.title,
+					boxX + chamferBorderPad + textPadX,
+					textStartY,
 					{ width: innerW, align: 'center' }
 				);
 
-			return
+			// Desenha resposta (amarela)
+			doc.fillColor([252,189,0])
+				.text(
+					item.answer,
+					boxX + chamferBorderPad + textPadX,
+					textStartY + qH + textSpacing,
+					{ width: innerW, align: 'center' }
+				);
 		}
 	});
 
